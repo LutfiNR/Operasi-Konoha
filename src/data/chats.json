@@ -1,0 +1,58 @@
+{
+  "level": {
+    "intro": [
+      {
+        "from": "anonymous",
+        "text": "Selamat datang, agen.",
+        "delay": 1000
+      },
+      {
+        "from": "anonymous",
+        "text": "Buktikan kemampuanmu. Temukan file tersembunyi dan kirimkan isinya ke kami.",
+        "delay": 2000
+      }
+    ],
+    "onObjectiveComplete": {
+      "obj1": {
+        "from": "anonymous",
+        "text": "Bagus. Kamu bisa melihat apa yang tersembunyi. Tantangan selanjutnya akan lebih sulit.",
+        "delay": 1500
+      }
+    },
+    "onFail": {
+      "sendWrongFile": {
+        "from": "anonymous",
+        "text": "Bukan itu file yang kami maksud. Periksa lebih cermat.",
+        "delay": 1000
+      }
+    }
+  },
+  "1": {
+    "intro": [
+      {
+        "from": "anonymous",
+        "text": "Selamat datang, agen.",
+        "delay": 1000
+      },
+      {
+        "from": "anonymous",
+        "text": "Buktikan kemampuanmu. Temukan file tersembunyi dan kirimkan isinya ke kami.",
+        "delay": 2000
+      }
+    ],
+    "onObjectiveComplete": {
+      "obj1": {
+        "from": "anonymous",
+        "text": "Bagus. Kamu bisa melihat apa yang tersembunyi. Tantangan selanjutnya akan lebih sulit.",
+        "delay": 1500
+      }
+    },
+    "onFail": {
+      "sendWrongFile": {
+        "from": "anonymous",
+        "text": "Bukan itu file yang kami maksud. Periksa lebih cermat.",
+        "delay": 1000
+      }
+    }
+  }
+}

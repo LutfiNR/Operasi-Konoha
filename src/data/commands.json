@@ -1,0 +1,42 @@
+[
+  {
+    "name": "help",
+    "description": "Show list of available commands.",
+    "dynamic": true,
+    "hidden": false
+  },
+  {
+    "name": "clear",
+    "description": "Clear the terminal output.",
+    "action": "clear",
+    "hidden": false
+  },
+  {
+    "name": "echo",
+    "description": "Display a line of text.",
+    "dynamic": true,
+    "args": true
+  },
+  {
+    "name": "ls",
+    "description": "List files in current directory.",
+    "action": "listFiles"
+  },
+  {
+    "name": "ls -a",
+    "description": "List files includes hidden in current directory.",
+    "action": "listFiles"
+  },
+  {
+    "name": "cat",
+    "description": "Read the content of a file.",
+    "action": "readFile",
+    "args": true
+  },
+  {
+    "name":"shutdown",
+    "description": "Shutdown the terminal and back",
+    "args":true,
+    "action":"shutdown"
+  }
+]

@@ -1,0 +1,282 @@
+{
+  "1": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": false
+  },
+  "2": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "3": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "4": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "5": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "6": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "7": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "8": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "9": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked":  true
+  },
+  "10": {
+    "title": "Berkenalan",
+    "narrative": "Anonymous butuh file credential coba berikan isi di dalamnya",
+    "commands": ["help", "ls", "ls -a", "cat", "send", "clear", "shutdown"],
+    "files": {
+      ".hidden.txt": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+      "credential.txt": "username:ratu, password:segaf"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj1",
+        "type": "send_text",
+        "expectedContent": "dXNlcm5hbWU6IHNlZ2FmZ2FudGVuZyBwYXNzd29yZDogY2V3ZW55YSByYXR1",
+        "onSuccess": "Bagus, kamu berhasil membaca file tersembunyi.",
+        "onFailure": "Itu bukan file yang kami cari. Coba lagi."
+      }
+    ],
+    "countdown": 180,
+    "rewardCoin": 10,
+    "clues": [
+      "Gunakan `ls -a` untuk menampilkan semua file, termasuk yang tersembunyi.",
+      "Gunakan `cat <namafile>` untuk membaca isi file.",
+      "Gunakan `send <namafile>` untuk mengirim file ke Anonymous."
+    ],
+    "isPassed": false,
+    "isLocked": true
+  }
+}
