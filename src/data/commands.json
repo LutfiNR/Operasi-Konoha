@@ -1,42 +1,46 @@
-[
-  {
+{
+  "help": {
     "name": "help",
-    "description": "Show list of available commands.",
-    "dynamic": true,
-    "hidden": false
+    "description": "Displays all available commands.",
+    "args": false
   },
-  {
-    "name": "clear",
-    "description": "Clear the terminal output.",
-    "action": "clear",
-    "hidden": false
-  },
-  {
+  "echo": {
     "name": "echo",
-    "description": "Display a line of text.",
-    "dynamic": true,
-    "args": true
+    "description": "Prints back the provided text.",
+    "args": true,
+    "usage": "<text_to_echo>"
   },
-  {
+  "clear": {
+    "name": "clear",
+    "description": "Clears the terminal history.",
+    "args": false
+  },
+  "ls": {
     "name": "ls",
-    "description": "List files in current directory.",
-    "action": "listFiles"
+    "description": "Lists files and directories.",
+    "args": false
   },
-  {
-    "name": "ls -a",
-    "description": "List files includes hidden in current directory.",
-    "action": "listFiles"
-  },
-  {
+  "cat": {
     "name": "cat",
-    "description": "Read the content of a file.",
-    "action": "readFile",
-    "args": true
+    "description": "Displays the content of a file.",
+    "args": true,
+    "usage": "<filename>"
   },
-  {
-    "name":"shutdown",
-    "description": "Shutdown the terminal and back",
-    "args":true,
-    "action":"shutdown"
+  "shutdown": {
+    "name": "shutdown",
+    "description": "Exits the current terminal session.",
+    "args": false
+  },
+  "submit": {
+    "name": "submit",
+    "description": "Submit your answer for the current objective.",
+    "args": true,
+    "usage": "<your_answer>"
+  },
+  "clue": {
+    "name": "clue",
+    "description": "Reveals a hint for the current level. May cost coins.",
+    "args": false, 
+    "usage": ""
   }
-]
+}

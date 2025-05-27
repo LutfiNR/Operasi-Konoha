@@ -1,58 +1,55 @@
 {
-  "level": {
-    "intro": [
-      {
-        "from": "anonymous",
-        "text": "Selamat datang, agen.",
-        "delay": 1000
-      },
-      {
-        "from": "anonymous",
-        "text": "Buktikan kemampuanmu. Temukan file tersembunyi dan kirimkan isinya ke kami.",
-        "delay": 2000
-      }
-    ],
-    "onObjectiveComplete": {
-      "obj1": {
-        "from": "anonymous",
-        "text": "Bagus. Kamu bisa melihat apa yang tersembunyi. Tantangan selanjutnya akan lebih sulit.",
-        "delay": 1500
-      }
-    },
-    "onFail": {
-      "sendWrongFile": {
-        "from": "anonymous",
-        "text": "Bukan itu file yang kami maksud. Periksa lebih cermat.",
-        "delay": 1000
-      }
-    }
-  },
   "1": {
     "intro": [
-      {
-        "from": "anonymous",
-        "text": "Selamat datang, agen.",
-        "delay": 1000
-      },
-      {
-        "from": "anonymous",
-        "text": "Buktikan kemampuanmu. Temukan file tersembunyi dan kirimkan isinya ke kami.",
-        "delay": 2000
-      }
+      { "text": "Selamat datang, ini adalah level tutorial, ikuti semua petunjuk.", "delay": 2000 },
+      { "text": "Ketikan command melalui terminal dengan cara mengetik di keyboard.", "delay": 2000 },
+      { "text": "Coba perintah help untuk melihat commands yang tersedia.", "delay": 2000 },
+      { "text": "Untuk menyelesaikan level ini tolong kirimkan isi text dari file yang ada!.", "delay": 2000 },
+      { "text": "Beli clue dengan command clue", "delay": 2000 },
+      { "text": "Kirim dengan command submit", "delay": 2000 }
     ],
     "onObjectiveComplete": {
-      "obj1": {
-        "from": "anonymous",
-        "text": "Bagus. Kamu bisa melihat apa yang tersembunyi. Tantangan selanjutnya akan lebih sulit.",
-        "delay": 1500
-      }
+      "obj1": [ 
+        { "from": "system", "text": "Bagus. Kamu telah menyelesaikan tutorial ini!", "delay": 1500 }
+      ]
     },
+    "onLevelComplete": [
+        { "from": "system", "text": "Level 1 Selesai! Kamu mendapatkan hadiah koin.", "delay": 2000}
+    ],
     "onFail": {
-      "sendWrongFile": {
-        "from": "anonymous",
-        "text": "Bukan itu file yang kami maksud. Periksa lebih cermat.",
-        "delay": 1000
-      }
+      "sendWrongFile": [ 
+        { "from": "system", "text": "Bukan itu isi file yang kami maksud. Periksa lebih cermat.", "delay": 1000 }
+      ],
+      "timeUp": [
+        { "from": "system", "text": "Waktu habis! Sayang sekali.", "delay": 1000 },
+        { "from": "system", "text": "Kamu akan dikembalikan ke pemilihan level.", "delay": 2000 }
+      ]
+    }
+  },
+  "2": {
+    "intro": [
+      { "text": "Selamat datang, ini adalah level tutorial, ikuti semua petunjuk.", "delay": 2000 },
+      { "text": "Ketikan command melalui terminal dengan cara mengetik di keyboard.", "delay": 2000 },
+      { "text": "Coba perintah help untuk melihat commands yang tersedia.", "delay": 2000 },
+      { "text": "Untuk menyelesaikan level ini tolong kirimkan isi text dari file yang ada!.", "delay": 2000 },
+      { "text": "Kirim dengan command submit", "delay": 2000 }
+    ],
+    "onObjectiveComplete": {
+      "obj1": [ 
+        { "from": "system", "text": "Bagus. Kamu telah menyelesaikan tutorial ini!", "delay": 1500 }
+      ]
+    },
+    "onLevelComplete": [
+        { "from": "system", "text": "Level 1 Selesai! Kamu mendapatkan hadiah koin.", "delay": 2000}
+    ],
+    "onFail": {
+      "sendWrongFile": [ 
+        { "from": "system", "text": "Bukan itu isi file yang kami maksud. Periksa lebih cermat.", "delay": 1000 }
+      ],
+      "timeUp": [
+        { "from": "system", "text": "Waktu habis! Sayang sekali.", "delay": 1000 },
+        { "from": "system", "text": "Kamu akan dikembalikan ke pemilihan level.", "delay": 2000 }
+      ]
     }
   }
 }

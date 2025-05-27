@@ -22,6 +22,7 @@ export class CardComponent extends Phaser.GameObjects.Container {
         this.on('pointerover', () => cardImage.setTint(0xdddddd));
         this.on('pointerout', () => cardImage.clearTint());
         this.on('pointerdown', () => {
+            window.clickSfx.play();
             if (onClick) onClick();
         });
 

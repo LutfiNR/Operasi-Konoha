@@ -1,8 +1,7 @@
+ import { MainMenu } from './scenes/MainMenu.js'
  import { Terminal } from './scenes/Terminal.js'
  import { Levels } from './scenes/Levels.js'
  import { Chat } from './scenes/Chat.js'
-
-
 
 const config = {
     type: Phaser.AUTO,
@@ -17,6 +16,7 @@ const config = {
         createContainer: true
     },
     scene: [
+        MainMenu,
         Levels,
         Terminal,
         Chat,
