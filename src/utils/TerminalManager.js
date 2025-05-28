@@ -1,4 +1,5 @@
 // src/utils/TerminalManager.js
+import { commandHandlers } from "./CommandHandlers.js";
 import { gameData } from "./GameData.js";
 import { chatManager } from "./ChatManager.js"; // Assuming it's in the same 'utils' folder
 
@@ -12,6 +13,8 @@ export const TerminalManager = {
    */
   handleLevelCompletion(terminalScene, { level }) {
     if (level && level.isPassed) { // Ensure level is indeed passed
+    window.bgm2.stop();
+    window.completeSFX.play();
       // 1. Update coin balance in GameData (addCoin triggers event)
       if (typeof level.rewardCoin === 'number' && level.rewardCoin > 0) {
         gameData.addCoin(level.rewardCoin);
@@ -22,7 +25,13 @@ export const TerminalManager = {
 
       // 2. Save all progress (includes coins, completed objectives, and completed levels)
       this.saveProgress();
-
+      
+      terminalScene.time.delayedCall(5000, () => { // Give time for messages
+      if (terminalScene.scene && terminalScene.scene.isActive()) { // Ensure scene hasn't been destroyed
+        terminalScene.scene.start('Levels'); // onSceneShutdown will be called by Phaser
+      }
+    }, [], terminalScene);
+      
       // 3. Optional: Trigger a *supplementary* "Level Truly Over, Big Congrats" chat.
       // The immediate "Level Passed!" message is now in the terminal via submit command.
       const chatData = terminalScene.cache.json.get('dataChat');
