@@ -326,7 +326,7 @@ if (!window.bgm2 || !window.bgm2.isPlaying) {
       }
     }
 
-    this.time.delayedCall(4000, () => { // Give time for messages
+    this.time.delayedCall(2000, () => { // Give time for messages
       if (this.scene && this.scene.isActive()) { // Ensure scene hasn't been destroyed
         this.scene.start('Levels'); // onSceneShutdown will be called by Phaser
       }
@@ -366,6 +366,8 @@ if (!window.bgm2 || !window.bgm2.isPlaying) {
 
   handleKeyInput(event) {
     if (this.isTimeUp) return; // Don't process normal input if time is up
+
+    window.keyboardSFX.play();
 
     if (event.key === "Enter") {
       const commandInput = this.inputBuffer.trim();
