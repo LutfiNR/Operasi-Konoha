@@ -27,11 +27,11 @@ export class MainMenu extends Phaser.Scene {
         // Creating it once can be slightly more performant if played many times,
         // but for simple clicks, this.sound.play('clickSound') directly is also fine.
         window.clickSfx = this.sound.add('clickSound');
-        window.bgm1 = this.sound.add('bgm1', { loop: true, volume: 2 });
-        window.bgm2 = this.sound.add('bgm2', { loop: true, volume: 2 });
-        window.notifSHX = this.sound.add('notification',{volume:2});
-        window.completeSFX = this.sound.add('complete',{volume:2});
-        window.timesupSFX = this.sound.add('timesup',{volume:2});
+        window.bgm1 = this.sound.add('bgm1', { loop: true, volume: 1.5 });
+        window.bgm2 = this.sound.add('bgm2', { loop: true, volume: 1.5 });
+        window.notifSFX = this.sound.add('notification',{volume:4});
+        window.completeSFX = this.sound.add('complete',{volume:4});
+        window.timesupSFX = this.sound.add('timesup',{volume:4});
         window.keyboardSFX = this.sound.add('keyboard',{volume:2});
 
         if (window.bgm2 && window.bgm2.isPlaying) {

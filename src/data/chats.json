@@ -35,7 +35,7 @@
       { "text": "Kirim dengan command submit", "delay": 2000 }
     ],
     "onObjectiveComplete": {
-      "obj1": [ 
+      "obj2": [ 
         { "from": "system", "text": "Bagus. Kamu telah menyelesaikan tutorial ini!", "delay": 1500 }
       ]
     },

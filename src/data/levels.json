@@ -13,7 +13,30 @@
         "expectedContent": "ini adalah isi dari file."
       }
     ],
-    "countdown": 5,
+    "countdown": 120,
+    "rewardCoin": 50,
+    "clues": [
+      { "id": "lvl1_clue1", "text": "Perintah 'ls' akan menunjukkan file yang ada.", "cost": 5 },
+      { "id": "lvl1_clue2", "text": "Gunakan 'cat introduction.txt' untuk melihat isinya.", "cost": 10 }
+    ],
+    "isPassed": false,
+    "isLocked": false
+  },
+  "2": {
+    "title": "Intro",
+    "narrative": "Level 1 : Tutorial",
+    "commands": ["help", "ls", "cat", "clear", "submit", "shutdown", "clue"], "files": {
+      "introduction.txt": "ini adalah isi dari file."
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "obj2",
+        "type": "send_text",
+        "expectedContent": "ini adalah isi dari file."
+      }
+    ],
+    "countdown": 120,
     "rewardCoin": 50,
     "clues": [
       { "id": "lvl1_clue1", "text": "Perintah 'ls' akan menunjukkan file yang ada.", "cost": 5 },

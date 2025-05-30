@@ -33,6 +33,7 @@ export const chatManager = {
         return;
       }
 
+      window.notifSFX.play();
       const currentMessageData = messages[messageIndex];
 
       const currentTextY = textBaseY + (messageIndex * messageYSpacing);
