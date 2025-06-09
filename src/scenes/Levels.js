@@ -1,172 +1,146 @@
 // src/scenes/Levels.js
-import { CardComponent } from '../components/Card.js'; // Adjust path if needed
+import { CardComponent } from '../components/Card.js';
 import { gameData } from '../utils/GameData.js';
 import { TerminalManager } from '../utils/TerminalManager.js';
+import { soundManager } from '../utils/SoundManager.js';
 
-// --- Constants for styling and layout ---
-const SCENE_TITLE = 'CASE';
-const TITLE_FONT_FAMILY = 'Roboto'; // Ensure this font is loaded
+// --- Konstanta untuk gaya visual dan tata letak ---
+const SCENE_TITLE = 'PILIH MISI';
+const TITLE_FONT_FAMILY = '"Orbitron", sans-serif';
 const TITLE_FONT_STYLE = 'Bold';
 const TITLE_FONT_SIZE = '48px';
-const TITLE_FILL_COLOR = '#CD4AF5';
-const TITLE_Y_OFFSET = 50;
+const TITLE_FILL_COLOR = '#FFFFFF';
+const TITLE_STROKE_COLOR = '#CD4AF5';
+const TITLE_STROKE_THICKNESS = 4;
+const TITLE_Y_OFFSET = 60;
 
 const CARD_COLUMNS = 5;
 const CARD_WIDTH = 120;
 const CARD_HEIGHT = 180;
-const CARD_SPACING = 50;
+const CARD_SPACING = 40;
 
-const COIN_TEXT_X_OFFSET = -20; // From right edge of screen
-const COIN_TEXT_Y_OFFSET = 20;  // From top edge of screen
-const COIN_FONT_SIZE = '20px';
-const COIN_FILL_COLOR = '#FFD700';
-const COIN_STROKE_COLOR = '#4A2F00'; // Dark brown stroke for definition
-const COIN_STROKE_THICKNESS = 3;
-// --- End Constants ---
+const COIN_TEXT_X_OFFSET = -20; // Jarak dari tepi kanan layar
+const COIN_TEXT_Y_OFFSET = 20;  // Jarak dari tepi atas layar
+const COIN_FONT_SIZE = '24px';
+const COIN_FILL_COLOR = '#FFD700'; // Warna emas
+const COIN_STROKE_COLOR = '#4A2F00'; // Stroke coklat tua untuk definisi
+const COIN_STROKE_THICKNESS = 4;
+// --- Akhir Konstanta ---
 
 export class Levels extends Phaser.Scene {
     constructor() {
         super('Levels');
         this.coinText = null;
-        this.coinChangeHandler = null; // To store the bound event handler
+        this.coinChangeHandler = null; // Untuk menyimpan referensi ke event handler
     }
 
+    // Preloading sebaiknya dipusatkan di MainMenu. Ini hanya fallback
+    // jika scene ini dijalankan secara langsung.
     preload() {
         this.load.image('background-level', 'assets/background.png');
-        this.load.audio('bgm1', 'assets/background.mp3');
-        this.load.audio('bgm2', 'assets/bgm2.mp3');
-        this.load.audio('complete', 'assets/complete.mp3');
-        this.load.audio('notification', 'assets/notif1.mp3');
-        this.load.audio('keyboard', 'assets/keyboard.mp3');
-        this.load.audio('timesup', 'assets/times up.mp3');
         this.load.image('card', 'assets/card.png');
         this.load.image('cardLocked', 'assets/card-locked.png');
-        this.load.json('levels', 'src/data/levels.json'); // Static level definitions
+        this.load.json('levels', 'src/data/levels.json');
     }
 
     create() {
-        // Load progress once when this scene starts.
-        // Pass null if no scene context for printing is needed by loadProgress itself,
-        // or pass `this` if Levels scene implements a `printLine` for debug messages.
-        TerminalManager.loadProgress(null); // This populates gameData
+        // Muat progres di awal untuk memastikan gameData (koin, level selesai) sudah yang terbaru.
+        TerminalManager.loadProgress();
 
-        const bg = this.add.image(0, 0, 'background-level').setOrigin(0);
-        const gameWidth = this.sys.game.config.width;
-        const gameHeight = this.sys.game.config.height;
-        bg.setDisplaySize(gameWidth, gameHeight);
+        // Latar belakang
+        this.add.image(0, 0, 'background-level').setOrigin(0)
+            .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
-        if (window.bgm2 && window.bgm2.isPlaying) {
-        window.bgm2.stop();
-        }
+        // Pastikan BGM yang benar sedang diputar
+        soundManager.playBGM(this, 'bgmMainMenu', { loop: true, volume: 0.4 });
 
-        if (!window.bgm1 || !window.bgm1.isPlaying) {
-        window.bgm1 = this.sound.add('bgm1', { loop: true, volume: 2 });
-        window.bgm1.play();
-        }
-
+        // Judul Scene
         this.add.text(this.cameras.main.centerX, TITLE_Y_OFFSET, SCENE_TITLE, {
             fontFamily: TITLE_FONT_FAMILY, fontStyle: TITLE_FONT_STYLE,
-            fontSize: TITLE_FONT_SIZE, fill: TITLE_FILL_COLOR
-        }).setOrigin(0.5);
+            fontSize: TITLE_FONT_SIZE, color: TITLE_FILL_COLOR,
+            stroke: TITLE_STROKE_COLOR, strokeThickness: TITLE_STROKE_THICKNESS
+        }).setOrigin(0.5).setLetterSpacing(6);
 
-        // --- Coin Display ---
+        // --- Tampilan Koin ---
         this.coinText = this.add.text(
-            gameWidth + COIN_TEXT_X_OFFSET, // Positioned relative to gameWidth for right alignment
-            COIN_TEXT_Y_OFFSET,
-            `Coins: ${gameData.coin}`, // Display initial coin value
-            {
-                fontFamily: TITLE_FONT_FAMILY, // Re-use a suitable font
-                fontSize: COIN_FONT_SIZE,
-                color: COIN_FILL_COLOR,
-                stroke: COIN_STROKE_COLOR,
-                strokeThickness: COIN_STROKE_THICKNESS
-            }
-        ).setOrigin(1, 0); // Origin top-right for easy positioning
+            this.cameras.main.width + COIN_TEXT_X_OFFSET, COIN_TEXT_Y_OFFSET,
+            `Coins: ${gameData.coin}`,
+            { fontFamily: TITLE_FONT_FAMILY, fontSize: COIN_FONT_SIZE, color: COIN_FILL_COLOR,
+              stroke: COIN_STROKE_COLOR, strokeThickness: COIN_STROKE_THICKNESS }
+        ).setOrigin(1, 0).setLetterSpacing(2);
 
-        // Define and store the handler so it can be removed later
+        // Daftarkan listener untuk event 'coinChanged' dari gameData
         this.coinChangeHandler = (newCoinValue) => {
-            if (this.coinText && this.coinText.scene) { // Check if scene and text object are still valid
+            if (this.coinText?.scene) { // Periksa apakah objek teks masih valid
                 this.coinText.setText(`Coins: ${newCoinValue}`);
             }
         };
         gameData.emitter.on('coinChanged', this.coinChangeHandler);
-        // --- End Coin Display ---
+        // --- Akhir Tampilan Koin ---
 
         const staticLevelsData = this.cache.json.get('levels');
         if (!staticLevelsData) {
-            console.error('Levels.js: Static levels data ("levels.json") not found.');
-            this.add.text(this.cameras.main.centerX, gameHeight / 2, 'Error loading levels!', {color: 'red', align: 'center'}).setOrigin(0.5);
+            console.error('Levels.js: Data level statis ("levels.json") tidak ditemukan.');
+            this.add.text(this.cameras.main.centerX, this.cameras.main.height / 2, 'Gagal memuat level!', {color: 'red'}).setOrigin(0.5);
             return;
         }
 
         const levelKeys = Object.keys(staticLevelsData);
-        const totalDefinedLevels = levelKeys.length;
-
-        if (totalDefinedLevels === 0) {
-            this.add.text(this.cameras.main.centerX, gameHeight / 2, 'No levels configured.', {color: '#fff', align: 'center'}).setOrigin(0.5);
+        if (levelKeys.length === 0) {
+            this.add.text(this.cameras.main.centerX, this.cameras.main.height / 2, 'Tidak ada level yang dikonfigurasi.', {color: '#fff'}).setOrigin(0.5);
             return;
         }
 
-        // --- Prepare runtime level data with dynamic lock/pass status ---
+        // --- Siapkan data level runtime dengan status terkunci/selesai yang dinamis ---
         const runtimeLevels = {};
         levelKeys.forEach(key => {
-            const staticData = staticLevelsData[key];
             runtimeLevels[key] = {
-                ...staticData, // Spread static data from levels.json
-                isPassed: gameData.isLevelComplete(key),
-                isLocked: !gameData.isLevelUnlocked(key) // Use GameData to determine if unlocked
+                ...staticLevelsData[key], // Salin data statis
+                isPassed: gameData.isLevelComplete(key),      // Ambil dari GameData
+                isLocked: !gameData.isLevelUnlocked(key)      // Ambil dari GameData
             };
         });
 
-        // --- Grid Calculation ---
-        const rows = Math.ceil(totalDefinedLevels / CARD_COLUMNS);
-        const gridContentWidth = CARD_COLUMNS * CARD_WIDTH;
-        const gridSpacingWidth = CARD_COLUMNS > 1 ? (CARD_COLUMNS - 1) * CARD_SPACING : 0;
-        const totalGridWidth = gridContentWidth + gridSpacingWidth;
-        const gridContentHeight = rows * CARD_HEIGHT;
-        const gridSpacingHeight = rows > 1 ? (rows - 1) * CARD_SPACING : 0;
-        const totalGridHeight = gridContentHeight + gridSpacingHeight;
-        const startX = this.cameras.main.centerX - totalGridWidth / 2 + CARD_WIDTH / 2;
-        const startY = this.cameras.main.centerY - totalGridHeight / 2 + CARD_HEIGHT / 2;
-        // Consider adjusting startY if title overlap is an issue based on your gameHeight.
+        // --- Perhitungan Grid ---
+        const rows = Math.ceil(levelKeys.length / CARD_COLUMNS);
+        const totalGridWidth = CARD_COLUMNS * (CARD_WIDTH + CARD_SPACING) - CARD_SPACING;
+        const totalGridHeight = rows * (CARD_HEIGHT + CARD_SPACING) - CARD_SPACING;
+        const startX = this.cameras.main.centerX - totalGridWidth / 2;
+        const startY = this.cameras.main.centerY - totalGridHeight / 2 + 40; // Didorong sedikit ke bawah
 
-        // --- Create Card Components ---
+        // --- Buat Komponen Kartu ---
         levelKeys.forEach((levelKey, index) => {
-            const currentRuntimeLevel = runtimeLevels[levelKey]; // Use data with dynamic lock/pass status
-            const row = Math.floor(index / CARD_COLUMNS);
+            const currentRuntimeLevel = runtimeLevels[levelKey];
             const col = index % CARD_COLUMNS;
-            const x = startX + col * (CARD_WIDTH + CARD_SPACING);
-            const y = startY + row * (CARD_HEIGHT + CARD_SPACING);
+            const row = Math.floor(index / CARD_COLUMNS);
+            
+            const x = startX + col * (CARD_WIDTH + CARD_SPACING) + CARD_WIDTH / 2;
+            const y = startY + row * (CARD_HEIGHT + CARD_SPACING) + CARD_HEIGHT / 2;
 
-            // Assuming CardComponent's constructor is:
-            // (scene, x, y, width, height, levelKey, levelData, onClickCallback)
-            // And CardComponent internally uses currentRuntimeLevel.isLocked to choose its texture
-            // and appearance.
             new CardComponent(this, x, y, CARD_WIDTH, CARD_HEIGHT,
                 levelKey,
-                currentRuntimeLevel, // Pass the processed level data
-                () => { // onClick callback
+                currentRuntimeLevel, // Kirim data dengan status dinamis
+                () => {
+                    // Hanya mulai level jika tidak terkunci
                     if (!currentRuntimeLevel.isLocked) {
                         this.scene.start('Terminal', { levelKey: levelKey });
-                    } else {
-                        console.log(`Level ${levelKey} is locked.`);
-                        // Optionally add visual feedback for clicking a locked card
-                        // e.g., this.tweens.add({ targets: cardInstance, x: x-5, duration: 50, yoyo: true, repeat: 3 });
                     }
                 }
             );
         });
 
-        // Add listener for scene shutdown to clean up event handlers
+        // Daftarkan listener untuk event SHUTDOWN agar bisa membersihkan listener lain
         this.events.on(Phaser.Scenes.Events.SHUTDOWN, this.onSceneShutdown, this);
     }
 
+    /**
+     * Membersihkan event listener saat scene ini berhenti untuk mencegah memory leak.
+     */
     onSceneShutdown() {
-        console.log("Levels scene shutting down, removing coinChanged listener.");
+        console.log("Scene Levels berhenti, menghapus listener 'coinChanged'.");
         if (this.coinChangeHandler) {
             gameData.emitter.off('coinChanged', this.coinChangeHandler);
-            this.coinChangeHandler = null; // Clear the stored handler
+            this.coinChangeHandler = null;
         }
     }
-    // update() method can be removed if not used.
 }

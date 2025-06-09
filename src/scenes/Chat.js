@@ -1,69 +1,69 @@
 // src/scenes/Chat.js
-import { chatManager } from '../utils/ChatManager.js'; // Adjust path if necessary
+import { chatManager } from '../utils/ChatManager.js';
 
+/**
+ * Scene ini berfungsi sebagai lapisan visual (overlay) untuk menampilkan
+ * chat di dalam gambar smartphone.
+ */
 export class Chat extends Phaser.Scene {
   constructor() {
     super('Chat');
+    this.chatContainer = null;
+    this.currentLevelKey = '1';
   }
 
+  // Preloading sebaiknya dipusatkan di MainMenu. Ini hanya fallback
+  // jika scene ini dijalankan secara terpisah.
   preload() {
     this.load.json('dataChat', 'src/data/chats.json');
     this.load.image('smartphone', 'assets/smartphone.png');
-    this.load.audio('bgm1', 'assets/background.mp3');
-        this.load.audio('bgm2', 'assets/bgm2.mp3');
-        this.load.audio('complete', 'assets/complete.mp3');
-        this.load.audio('notification', 'assets/notif1.mp3');
-        this.load.audio('keyboard', 'assets/keyboard.mp3');
-        this.load.audio('timesup', 'assets/times up.mp3');
   }
 
+  /**
+   * Menerima data saat scene dimulai.
+   * @param {object} data - Objek data yang dikirim dari scene sebelumnya.
+   * @param {string} data.levelKey - Kunci (ID) dari level saat ini.
+   */
   init(data) {
-    this.currentLevelKey = data.levelKey || '1'; // Matches key from Terminal
-    console.log(`[Chat INIT] Level Key: ${this.currentLevelKey}`);
-
-    // Clean up container if scene is reused (e.g. if not fully stopped and restarted)
+    this.currentLevelKey = data.levelKey || '1';
+    // Membersihkan container jika scene di-restart tanpa dihancurkan
     if (this.chatContainer) {
-        this.chatContainer.destroy(); // Destroy container and its children
+        this.chatContainer.destroy();
         this.chatContainer = null;
     }
   }
 
   create() {
-    const gameWidth = this.sys.game.config.width;
-    const gameHeight = this.sys.game.config.height;
-    console.log(`[Chat CREATE] For Level Key: ${this.currentLevelKey}`);
+    const { width, height } = this.cameras.main;
 
-    // Smartphone background, positioned by its bottom-right corner to game's bottom-right
-    this.add.image(gameWidth, gameHeight, 'smartphone')
+    // Menampilkan gambar smartphone di pojok kanan bawah
+    this.add.image(width, height, 'smartphone')
       .setOrigin(1, 1)
       .setDisplaySize(360, 640);
 
-    // Chat container, centered on the screen.
-    // Chat elements within ChatManager are positioned relative to this container's center.
-    this.chatContainer = this.add.container(gameWidth / 2, gameHeight / 2);
+    // Kontainer chat dipusatkan di layar, elemen di dalamnya diposisikan relatif
+    // Diberi sedikit offset ke atas agar pas dengan layar smartphone
+    this.chatContainer = this.add.container(width / 2, height / 2 - 40);
 
     const chatData = this.cache.json.get('dataChat');
-    // Ensure levelChatData is gracefully handled if currentLevelKey isn't in chatData
     const levelChatData = chatData ? chatData[this.currentLevelKey] : null;
 
-    // "Anonymous" title text, matches original positioning
-    this.chatContainer.add(this.add.text(400, -250, "Petunjuk", {
-      fontFamily: 'Roboto', // Ensure Roboto is loaded
+    // Teks judul "X" di bagian atas area chat
+    this.chatContainer.add(this.add.text(0, -250, "X", {
+      fontFamily: 'Roboto, sans-serif',
       fontSize: '24px',
       color: '#1d74fd',
-    }));
+    }).setOrigin(0.5));
 
-    // Display intro messages using chatManager
-    if (levelChatData && levelChatData.intro) {
+    // Panggil chatManager untuk menampilkan pesan intro jika ada
+    if (levelChatData?.intro) {
       chatManager.displayChat({
-        scene: this, // Pass this Chat scene instance
+        scene: this, // Kirim instance scene Chat ini
         chatContainer: this.chatContainer,
         messages: levelChatData.intro
       });
     } else {
-      console.warn(`Chat.js: Chat data or intro messages not found for levelKey: ${this.currentLevelKey}`);
+      console.warn(`Chat.js: Data chat atau intro tidak ditemukan untuk level: ${this.currentLevelKey}`);
     }
   }
-
-  // update() can be removed if not used for active interactions in chat
 }

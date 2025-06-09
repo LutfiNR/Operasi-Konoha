@@ -1,86 +1,82 @@
 // src/utils/TerminalManager.js
-import { commandHandlers } from "./CommandHandlers.js";
 import { gameData } from "./GameData.js";
-import { chatManager } from "./ChatManager.js"; // Assuming it's in the same 'utils' folder
+import { chatManager } from "./ChatManager.js";
+import { soundManager } from './SoundManager.js';
 
+/**
+ * Objek ini mengelola logika tingkat tinggi yang terkait dengan progres game,
+ * seperti apa yang terjadi setelah level selesai, serta menyimpan dan memuat data.
+ */
 export const TerminalManager = {
   /**
-   * Handles actions after a level is successfully completed.
-   * Assumes the level's 'isPassed' and individual objectives' 'isComplete' states
-   * in GameData have already been updated by the command handler.
-   * @param {Phaser.Scene} terminalScene - The Terminal scene instance.
-   * @param {object} level - The currentLevelData object from the Terminal scene.
+   * Menangani semua tindakan setelah sebuah level berhasil diselesaikan.
+   * Dipanggil oleh Terminal.js setelah command 'submit' terakhir berhasil.
+   * @param {Phaser.Scene} terminalScene - Instance dari scene Terminal.
+   * @param {object} level - Objek data untuk level yang baru saja diselesaikan.
    */
   handleLevelCompletion(terminalScene, { level }) {
-    if (level && level.isPassed) { // Ensure level is indeed passed
-    window.bgm2.stop();
-    window.completeSFX.play();
-      // 1. Update coin balance in GameData (addCoin triggers event)
-      if (typeof level.rewardCoin === 'number' && level.rewardCoin > 0) {
+    if (level?.isPassed) {
+      // Mainkan suara penyelesaian level
+      soundManager.playSFX(terminalScene, 'complete');
+
+      // Tambahkan koin hadiah ke data game
+      if (typeof level.rewardCoin === 'number') {
         gameData.addCoin(level.rewardCoin);
-        // The 'submit' handler already printed "You earned X coins."
-        // This line confirms the new total in the terminal.
-        terminalScene.printLine(`Your coin balance is now: ${gameData.coin}.`);
+        terminalScene.printLine(`Saldo koin Anda sekarang: ${gameData.coin}.`);
       }
 
-      // 2. Save all progress (includes coins, completed objectives, and completed levels)
+      // Simpan semua progres
       this.saveProgress();
-      
-      terminalScene.time.delayedCall(5000, () => { // Give time for messages
-      if (terminalScene.scene && terminalScene.scene.isActive()) { // Ensure scene hasn't been destroyed
-        terminalScene.scene.start('Levels'); // onSceneShutdown will be called by Phaser
-      }
-    }, [], terminalScene);
-      
-      // 3. Optional: Trigger a *supplementary* "Level Truly Over, Big Congrats" chat.
-      // The immediate "Level Passed!" message is now in the terminal via submit command.
-      const chatData = terminalScene.cache.json.get('dataChat');
-      const levelKeyForChat = terminalScene.currentLevelKey; // Use the key from Terminal scene instance
 
-      const levelCompleteChatMessages = chatData?.[levelKeyForChat]?.onLevelComplete;
-      if (levelCompleteChatMessages) {
-        const chatSceneInstance = terminalScene.scene.get('Chat'); // Get active Chat scene instance
-        if (chatSceneInstance && chatSceneInstance.scene.isActive() && chatSceneInstance.chatContainer) {
+      // Opsional: Tampilkan chat "Level Selesai" jika ada di dataChat.json
+      const chatData = terminalScene.cache.json.get('dataChat');
+      const levelCompleteChat = chatData?.[terminalScene.currentLevelKey]?.onLevelComplete;
+      if (levelCompleteChat) {
+        const chatScene = terminalScene.scene.get('Chat'); // Dapatkan scene Chat yang aktif
+        if (chatScene?.scene.isActive() && chatScene.chatContainer) {
           chatManager.displayChat({
-            scene: chatSceneInstance,
-            chatContainer: chatSceneInstance.chatContainer,
-            messages: Array.isArray(levelCompleteChatMessages) ? levelCompleteChatMessages : [levelCompleteChatMessages]
+            scene: chatScene,
+            chatContainer: chatScene.chatContainer,
+            messages: Array.isArray(levelCompleteChat) ? levelCompleteChat : [levelCompleteChat]
           });
-        } else {
-          console.warn("TerminalManager: Chat scene or container not available for 'onLevelComplete' chat.");
         }
       }
-      terminalScene.refreshOutput(true); // Refresh terminal after any prints from here
+
+      // Kembali ke menu pemilihan level setelah jeda
+      terminalScene.time.delayedCall(5000, () => {
+          if (terminalScene.scene.isActive()) {
+              terminalScene.scene.start('Levels');
+          }
+      });
+      terminalScene.refreshOutput(true);
     }
   },
 
   /**
-   * Triggers a supplementary chat sequence for a failed submission, if defined.
-   * Primary failure message is printed by 'submit' to the terminal.
-   * @param {Phaser.Scene} terminalScene - The Terminal scene instance.
-   * @param {string} levelKey - The key of the current level.
-   * @param {object} objective - The objective attempted.
-   * @param {string} failTypeKey - The key for the failure message in dataChat.json (e.g., "sendWrongFile").
+   * Memicu chat kegagalan tambahan jika didefinisikan.
+   * Pesan kegagalan utama ditampilkan di terminal oleh command 'submit'.
+   * @param {Phaser.Scene} terminalScene - Instance dari scene Terminal.
+   * @param {string} levelKey - Kunci dari level saat ini.
+   * @param {string} failTypeKey - Kunci untuk pesan kegagalan di dataChat.json.
    */
-  notifySubmissionFailure(terminalScene, levelKey, objective, failTypeKey) {
-    console.log(`TerminalManager: Notifying submission failure for objective ${objective.id}, type ${failTypeKey}.`);
+  notifySubmissionFailure(terminalScene, { levelKey, failTypeKey }) {
     const chatData = terminalScene.cache.json.get('dataChat');
-    const failureChatMessages = chatData?.[levelKey]?.onFail?.[failTypeKey];
-
-    if (failureChatMessages) {
-      const chatSceneInstance = terminalScene.scene.get('Chat');
-      if (chatSceneInstance && chatSceneInstance.scene.isActive() && chatSceneInstance.chatContainer) {
+    const failureChat = chatData?.[levelKey]?.onFail?.[failTypeKey];
+    if (failureChat) {
+      const chatScene = terminalScene.scene.get('Chat');
+      if (chatScene?.scene.isActive() && chatScene.chatContainer) {
         chatManager.displayChat({
-          scene: chatSceneInstance,
-          chatContainer: chatSceneInstance.chatContainer,
-          messages: Array.isArray(failureChatMessages) ? failureChatMessages : [failureChatMessages]
+          scene: chatScene,
+          chatContainer: chatScene.chatContainer,
+          messages: Array.isArray(failureChat) ? failureChat : [failureChat]
         });
-      } else {
-        console.warn("TerminalManager: Chat scene or container not available for supplementary failure chat.");
       }
     }
   },
 
+  /**
+   * Menyimpan data progres game saat ini ke localStorage.
+   */
   saveProgress() {
     try {
       const dataToSave = {
@@ -88,45 +84,34 @@ export const TerminalManager = {
         completedLevels: Array.from(gameData.completedLevels),
         coin: gameData.coin
       };
-      localStorage.setItem('cyberHeistGameProgress', JSON.stringify(dataToSave)); // Use a unique game key
-      console.log("Progress saved via TerminalManager.", dataToSave);
+      localStorage.setItem('cyberHeistGameProgress', JSON.stringify(dataToSave));
+      console.log("Progres disimpan:", dataToSave);
     } catch (e) {
-      console.error("TerminalManager: Failed to save progress:", e);
+      console.error("Gagal menyimpan progres:", e);
     }
   },
 
-  loadProgress(sceneContextForPrinting) { // sceneContextForPrinting is optional for printing messages
+  /**
+   * Memuat data progres game dari localStorage dan menginisialisasi gameData.
+   */
+  loadProgress() {
     try {
       const savedData = localStorage.getItem('cyberHeistGameProgress');
-      let UImessage = "No saved progress found. Initializing new game data."; // For UI/console
       if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        gameData.completedObjectives = new Set(parsedData.completedObjectives || []);
-        gameData.completedLevels = new Set(parsedData.completedLevels || []);
-        // Ensure coin is a number, default to initial if corrupt or missing from save
-        gameData.coin = (typeof parsedData.coin === 'number' ? parsedData.coin : 10); // Setter handles event
-        UImessage = `Progress loaded! Coins: ${gameData.coin}. Levels completed: ${gameData.completedLevels.size}`;
-        console.log("Progress loaded via TerminalManager.", parsedData);
+        const data = JSON.parse(savedData);
+        gameData.completedObjectives = new Set(data.completedObjectives || []);
+        gameData.completedLevels = new Set(data.completedLevels || []);
+        gameData.coin = typeof data.coin === 'number' ? data.coin : 10;
+        console.log("Progres dimuat:", data);
       } else {
-        gameData.reset(); // Initialize gameData to default if no save found
-        UImessage = `No saved progress. Initializing game data. Coins: ${gameData.coin}.`;
-      }
-      
-      // Optional printing to a scene (e.g., a Boot scene), primarily for debugging.
-      if (sceneContextForPrinting && typeof sceneContextForPrinting.printLine === 'function') {
-        // sceneContextForPrinting.printLine(UImessage);
-      } else {
-        console.log(UImessage); // Fallback to console
+        // Jika tidak ada data tersimpan, reset ke kondisi awal
+        gameData.reset();
+        console.log("Tidak ada progres tersimpan, memulai game baru.");
       }
     } catch (e) {
-      console.error("TerminalManager: Failed to load progress:", e);
-      gameData.reset(); // Reset to a known safe state on error
-      const errorUIMessage = "Error loading progress. Starting with fresh game data.";
-      if (sceneContextForPrinting && typeof sceneContextForPrinting.printLine === 'function') {
-        // sceneContextForPrinting.printLine(errorUIMessage);
-      } else {
-        console.log(errorUIMessage);
-      }
+      console.error("Gagal memuat progres:", e);
+      // Jika terjadi error, reset ke kondisi aman
+      gameData.reset();
     }
   }
 };
