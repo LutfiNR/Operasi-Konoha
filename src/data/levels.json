@@ -2,7 +2,7 @@
   "1": {
     "title": "Bab 1: Dipecat",
     "narrative": "Kamu adalah Rizi. Setelah bertahun-tahun dedikasi, Konoha Corp memecatmu tanpa alasan jelas melalui email dingin. Malamnya, komputermu menyala sendiri, menampilkan pesan dari 'X': \"Mereka membuangmu karena kau hampir tahu kebenarannya. Jika kau ingin keadilan, ikuti instruksiku.\" Baca email dan pesan tersebut.",
-    "commands": ["help", "ls", "cat", "clear", "clue", "submit", "shutdown"],
+    "commands": ["help", "ls", "cat", "clear", "clue", "submit"],
     "files": {
       "email_pemecatan.txt": "Kepada Sdr. Rizi,\n\nDengan berat hati kami sampaikan bahwa layanan Anda di Konoha Corp tidak lagi dibutuhkan efektif per hari ini.\nTerima kasih atas waktunya.\n\nManajemen Konoha Corp.",
       "pesan_dari_X.txt": "Rizi,\nAku tahu ini mengejutkan. Pemecatanmu bukan kebetulan. Ada sesuatu yang besar yang mereka sembunyikan, dan kau terlalu dekat untuk mengungkapnya.\nIni baru permulaan. Jika kau siap, aku akan membantumu mencari tahu apa yang sebenarnya terjadi.\nKetik 'lanjutkan misi' jika kau mengerti dan siap.\n\n-X"
@@ -44,7 +44,7 @@
   "2": {
     "title": "Bab 2: Investigasi Awal",
     "narrative": "'X' memberimu akses terbatas ke beberapa direktori internal Konoha Corp. Misimu: cari petunjuk awal tentang apa yang mereka sembunyikan. Ada desas-desus tentang proyek rahasia. Temukan namanya.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
     "files": {
       "README.txt": "Akses Terbatas Sistem Konoha Corp.\nDirektori Tersedia: /dokumen_umum, /log_sistem\nGunakan 'cd <direktori>' untuk pindah, 'cd ..' untuk kembali.",
       "dokumen_umum/kebijakan.txt": "Kebijakan standar perusahaan. Tidak banyak yang berguna di sini.",
@@ -75,7 +75,7 @@
   "3": {
     "title": "Bab 3: Jejak Digital",
     "narrative": "'X' menginformasikan bahwa data 'Project K.N.H.' sering ditransfer ke server eksternal. Tugasmu adalah menemukan alamat IP server tujuan tersebut dari log transfer data.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
     "files": {
       "log_sistem/README_log.txt": "Direktori ini berisi log transfer data dan log aktivitas server lainnya.",
       "log_sistem/transfer_data_300525.log": "Log Transfer Data (30/05/2025):\n10:05 - Paket KNH_alpha_001 -> 192.168.1.10 (Internal Backup)\n11:30 - Paket KNH_beta_003 -> 203.0.113.45 (Eksternal - Analisis)\n15:00 - Sinkronisasi data umum -> 10.0.0.5 (Server Cabang)",
@@ -104,7 +104,7 @@
   "4": {
     "title": "Bab 4: Menyusup Server Eksternal",
     "narrative": "'X' memberitahumu bahwa server eksternal (203.0.113.45) memiliki kerentanan pada port tertentu. 'X' memberimu tool 'exploit'. Gunakan untuk mendapatkan akses dan temukan file konfigurasi utama server.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "exploit", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "exploit", "submit", "clue"],
     "files": {},
     "directories": [],
     "objectives": [
@@ -141,7 +141,7 @@
   "5": {
     "title": "Bab 5: Melewati Firewall",
     "narrative": "Data utama 'Project K.N.H.' ada di '/mnt/knh_data_secure' di server eksternal, namun dilindungi firewall. 'X' memberimu script 'bypass_fw.sh'. Jalankan script ini untuk menonaktifkan firewall sementara dan akses file 'manifest_knh.txt'.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "run", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "run", "submit", "clue"],
     "files": {
       "bypass_fw.sh": "#!/bin/bash\necho 'Firewall temporarily disabled. Access granted to /mnt/knh_data_secure for 60 seconds.'\n# (Ini hanya simulasi, tidak benar-benar menjalankan script)"
     },
@@ -179,7 +179,7 @@
   "6": {
     "title": "Bab 6: Data Terenkripsi",
     "narrative": "'X' memberitahu kunci dekripsi ada di catatan Dr. Aris. Kamu perlu kembali ke sistem internal Konoha untuk mencari catatannya, lalu kembali ke server eksternal untuk mendekripsi file 'rencana_final_knh.dat'.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "decrypt", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "decrypt", "submit", "clue"],
     "files": {
       "mnt/knh_data_secure/rencana_final_knh.dat": "ISI FILE TERENKRIPSI",
       "dokumen_umum/catatan_dr_aris.txt": "Catatan Pribadi Dr. Aris:\nMeeting penting Project K.N.H. hari ini. Presentasi berjalan lancar.\nJangan lupa, ulang tahunku tanggal 15 Agustus 1978. Perlu siapkan perayaan kecil."
@@ -218,7 +218,7 @@
   "7": {
     "title": "Bab 7: Saksi Bisu",
     "narrative": "'X' memberimu akses ke log komunikasi internal para eksekutif. Cari percakapan yang membahas Project K.N.H. dan identifikasi eksekutif yang paling tampak ragu.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
     "files": {
       "log_komunikasi/chat_direksi_01.log": "CEO: Progres K.N.H. harus dipercepat. Risiko terlalu besar jika bocor.\nCFO: Anggaran sudah maksimal. Hasil harus sepadan.\nCTO: Secara teknis, Oracle_Eye sudah stabil.",
       "log_komunikasi/chat_direksi_02.log": "COO: Saya masih khawatir soal aspek etis K.N.H. ini, Pak CEO.\nCEO: Etika bisa dinegosiasikan, Tuan Tanaka. Hasil akhir yang penting.\nCFO: Tuan Tanaka, fokus pada operasional. Jangan cemaskan hal lain.",
@@ -247,7 +247,7 @@
   "8": {
     "title": "Bab 8: Inti Skandal",
     "narrative": "Dengan informasi tentang Tuan Tanaka, 'X' berhasil menemukan lokasi file master plan Project K.N.H. File tersebut ada di server pribadi Tanaka. Tugasmu adalah masuk dan mengambil file 'master_plan_KNH.pdf'.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
     "files": {
       "README_tanaka_server.txt": "Server pribadi Tuan Tanaka. Akses diberikan oleh X.\nFile penting ada di direktori /rahasia_perusahaan.",
       "rahasia_perusahaan/master_plan_KNH.pdf": "DOKUMEN MASTER PLAN PROJECT K.N.H. (Sangat Rahasia)\nBab 1: Tujuan Proyek - Dominasi Pasar Global.\nBab 2: Metodologi - Penggunaan Algoritma Oracle_Eye untuk manipulasi sentimen dan prediksi pasar.\nBab 3: Target Keuntungan - Triliunan dalam 5 tahun.\nBab 4: Risiko & Mitigasi - Termasuk eliminasi personil yang berpotensi membocorkan (Rizi, Tanaka jika tidak kooperatif).\nBab 5: Daftar Eksekutif Terlibat - (Berisi nama-nama petinggi Konoha Corp).",
@@ -283,7 +283,7 @@
   "9": {
     "title": "Bab 9: Bukti Tak Terbantahkan",
     "narrative": "Kamu telah mengumpulkan banyak bukti. 'X' memintamu mengkompilasi tiga bukti terkuat ke dalam satu paket laporan.",
-    "commands": ["help", "ls", "cat", "cd", "clear", "compile", "submit", "clue", "shutdown"],
+    "commands": ["help", "ls", "cat", "cd", "clear", "compile", "submit", "clue"],
     "files": {
       "email_pemecatan.txt": "(Konten dari Bab 1)",
       "pesan_dari_X.txt": "(Konten dari Bab 1)",
@@ -325,7 +325,7 @@
   "10": {
     "title": "Bab 10: Pilihan Akhir",
     "narrative": "'X' menghubungimu: \"Rizi, kau berhasil. 'laporan_final.zip' berisi semua yang kita butuhkan. Sekarang, pilihan ada di tanganmu. Ungkap semua ini ke publik, hancurkan Konoha Corp dan orang-orang di baliknya. Atau... jual data ini ke pihak ketiga yang siap membayarmu mahal. Pikirkan baik-baik.\"",
-    "commands": ["help", "ls", "cat", "clear", "submit", "shutdown"],
+    "commands": ["help", "ls", "cat", "clear", "submit"],
     "files": {
       "laporan_final.zip": "(Berisi kompilasi bukti dari Bab 9)",
       "tawaran_pihak_ketiga.txt": "Rizi,\nKami dengar kau memiliki sesuatu yang sangat berharga. Kami siap membayar 10.000 koin untuk 'laporan_final.zip'. Tidak ada pertanyaan. Transfer instan.\n\n- Kolektor Data Gelap",

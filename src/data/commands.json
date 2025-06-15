@@ -41,12 +41,6 @@
     "args": false,
     "usage": ""
   },
-  "shutdown": {
-    "name": "shutdown",
-    "description": "Keluar dari sesi terminal saat ini dan kembali ke menu level.",
-    "args": false,
-    "usage": ""
-  },
   "exploit": {
     "name": "exploit",
     "description": "Mencoba mengeksploitasi kerentanan pada target.",

@@ -126,7 +126,7 @@ export const gameData = {
    * @returns {boolean} - True jika berhasil, false jika koin tidak cukup.
    */
   spendCoin(amount) {
-    if (typeof amount === 'number' && amount > 0 && this.coin >= amount) {
+    if (typeof amount === 'number' && amount >= 0 && this.coin >= amount) {
       this.coin -= amount; // Menggunakan setter, akan memicu event
       return true;
     }

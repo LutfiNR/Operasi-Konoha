@@ -5,15 +5,19 @@ import { gameData } from '../utils/GameData.js';
 import { soundManager } from '../utils/SoundManager.js';
 
 // --- Konstanta untuk Tampilan ---
-const PROMPT_BASE = "X@Konoha";
-const FONT_FAMILY = '"Courier New", Courier, monospace';
+const FONT_FAMILY = '"Share Tech", sans-serif';
 const FONT_SIZE = "16px";
 const HISTORY_LIMIT = 200;
 
-// Posisi dan ukuran area terminal
-const AREA_X = -450, AREA_Y = -300, AREA_W = 900, AREA_H = 600;
+// Konstanta untuk area terminal, disesuaikan dengan permintaan Anda
+// Ini mendefinisikan area di dalam container yang dipusatkan di layar
+const PROMPT_BASE = "GhostFox@Computer";
+const TERMINAL_AREA_X = -340;       // Posisi X relatif dari tengah container
+const TERMINAL_AREA_Y = -275;       // Posisi Y relatif dari tengah container
+const TERMINAL_AREA_WIDTH = 560;    // Lebar area terminal
+const TERMINAL_AREA_HEIGHT = 360;   // Tinggi area terminal
 
-// Gaya Tampilan UI Atas
+// Gaya Tampilan UI Atas (Timer & Koin)
 const UI_Y_OFFSET = 30;
 const TIMER_FONT_SIZE = '24px';
 const TIMER_FILL_COLOR = '#FFFF00';
@@ -38,6 +42,7 @@ export class Terminal extends Phaser.Scene {
 
   // Preloading sebaiknya dipusatkan di MainMenu, ini hanya fallback.
   preload() {
+    this.load.image('background-room', 'assets/room.png');
     this.load.json("levels", "src/data/levels.json");
     this.load.json("commands", "src/data/commands.json");
     this.load.json('dataChat', 'src/data/chats.json');
@@ -63,13 +68,16 @@ export class Terminal extends Phaser.Scene {
 
   create() {
     const { width, height } = this.cameras.main;
-    this.cameras.main.setBackgroundColor('#0A0A0A'); // Latar belakang gelap untuk fokus
-
+    
+    // --- Latar Belakang & Suara ---
+    this.add.image(0, 0, 'background-room').setOrigin(0).setDisplaySize(width, height);
     soundManager.playBGM(this, 'bgmTerminal', { loop: true, volume: 0.2 });
     this.keyboardSound = this.sound.add('keyboard', { volume: 0.6 });
 
-    // Muat data dari cache
+    // --- Muat Data Game ---
     this.levels = this.cache.json.get("levels");
+    this.chats = this.cache.json.get("dataChat");
+
     this.commandsMeta = this.cache.json.get("commands");
     const staticLevelData = this.levels?.[this.currentLevelKey];
     if (!staticLevelData) {
@@ -80,7 +88,7 @@ export class Terminal extends Phaser.Scene {
     
     // Gunakan deep copy agar modifikasi runtime tidak mengubah cache
     this.currentLevel = JSON.parse(JSON.stringify(staticLevelData));
-    
+    // this.curretLevelChat = JSON.parse(this)
     this.allowedCommands = this.currentLevel.commands || [];
     this.levelFiles = this.currentLevel.files || {};
     this.levelDirectories = this.currentLevel.directories || [];
@@ -92,36 +100,57 @@ export class Terminal extends Phaser.Scene {
     }
     this.currentLevel.isPassed = gameData.isLevelComplete(this.currentLevelKey) || (objectivesPresent && this.currentLevel.objectives.every(obj => obj.isComplete));
 
-    // Inisialisasi status 'revealed' untuk clue (hanya untuk sesi ini)
     if (this.currentLevel.clues) {
         this.currentLevel.clues.forEach(clue => { clue.isRevealed = false; });
     }
 
     // --- Setup UI ---
-    this.setupTerminalUI();
+    this.setupTerminalUI(); // Menggunakan kode UI yang Anda berikan
     this.setupTopUI();
     
-    if (this.currentLevel.narrative) this.printLine(this.currentLevel.narrative);
+    // Luncurkan Chat Scene sebagai overlay
+    if (this.scene.manager.keys.Chat) {
+        this.scene.launch('Chat', { levelKey: this.currentLevelKey });
+    }
+
+    // // --- Pesan Awal & Listeners ---
+    // if (this.currentLevel.narrative) this.printLine('Narrative : \n' + this.currentLevel.narrative);
     this.refreshOutput(true);
 
-    // --- Daftarkan Listeners ---
     this.input.keyboard.on("keydown", this.handleKeyInput, this);
     this.input.on('wheel', this.handleScroll, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, this.onSceneShutdown, this);
   }
 
+  /**
+   * Mengatur tampilan terminal di tengah layar, sesuai dengan permintaan Anda.
+   */
   setupTerminalUI() {
     const { width, height } = this.cameras.main;
     this.terminalOutputContainer = this.add.container(width / 2, height / 2);
 
-    this.outputText = this.add.text(AREA_X, AREA_Y, "", {
+    // Latar belakang area terminal (transparan, untuk debugging jika perlu)
+    const terminalAreaBackground = this.add.graphics();
+    terminalAreaBackground.fillStyle(0x000000, 0.0); // Ubah alpha (misal: 0.5) untuk melihat batas area
+    terminalAreaBackground.fillRect(TERMINAL_AREA_X, TERMINAL_AREA_Y, TERMINAL_AREA_WIDTH, TERMINAL_AREA_HEIGHT);
+    this.terminalOutputContainer.add(terminalAreaBackground);
+
+    // Objek teks untuk output terminal
+    this.outputText = this.add.text(TERMINAL_AREA_X, TERMINAL_AREA_Y, "", {
       fontFamily: FONT_FAMILY, fontSize: FONT_SIZE, color: '#00ff00',
-      wordWrap: { width: AREA_W - 20, useAdvancedWrap: true }, lineSpacing: 4
+      wordWrap: { width: TERMINAL_AREA_WIDTH - 20, useAdvancedWrap: true },
+      lineSpacing: 4
     });
     this.terminalOutputContainer.add(this.outputText);
 
-    const maskShape = this.make.graphics().fillRect(
-      this.terminalOutputContainer.x + AREA_X, this.terminalOutputContainer.y + AREA_Y, AREA_W, AREA_H
+    // Masker untuk membuat efek scroll
+    const maskShape = this.make.graphics();
+    maskShape.fillStyle(0xffffff); // Warna tidak penting untuk mask geometri
+    maskShape.fillRect(
+        this.terminalOutputContainer.x + TERMINAL_AREA_X, 
+        this.terminalOutputContainer.y + TERMINAL_AREA_Y, 
+        TERMINAL_AREA_WIDTH, 
+        TERMINAL_AREA_HEIGHT
     );
     this.outputText.setMask(maskShape.createGeometryMask());
   }
@@ -163,8 +192,7 @@ export class Terminal extends Phaser.Scene {
     this.remainingTime--;
     if (this.timerTextDisplay?.scene) this.timerTextDisplay.setText(`Time: ${this.formatTime(this.remainingTime)}`);
     if (this.remainingTime <= 0) {
-      this.isTimeUp = true;
-      this.handleTimeUp();
+      this.isTimeUp = true; this.handleTimeUp();
     }
   }
 
@@ -208,14 +236,14 @@ export class Terminal extends Phaser.Scene {
     const baseCommand = args[0].toLowerCase();
     const handler = commandHandlers[baseCommand];
     if (this.allowedCommands.includes(baseCommand) && handler) {
-      try { handler({ terminal: this, args, commandsMeta: this.commandsMeta }); }
+      try { 
+        handler({ terminal: this, args, commandsMeta: this.commandsMeta , allowedCommands: this.allowedCommands}); }
       catch (e) { console.error(`Error executing ${baseCommand}:`, e); this.printLine(`An error occurred.`); }
     } else { this.printLine(`bash: ${baseCommand}: command not found`); }
   }
 
   checkObjectiveTrigger({ type, target, targetPrefix, directSuccess = false, objective = null, successMessage = null }) {
     if (directSuccess && objective) { this.completeObjective(objective, successMessage); return; }
-
     for (const obj of (this.currentLevel.objectives || [])) {
         if (obj.type === type && obj.id && !gameData.isObjectiveComplete(obj.id)) {
             let match = false;
@@ -241,7 +269,6 @@ export class Terminal extends Phaser.Scene {
     objective.isComplete = true;
     gameData.completeObjective(objective.id);
     soundManager.playSFX(this, 'notification');
-
     const allObjectivesComplete = (this.currentLevel.objectives || []).every(obj => gameData.isObjectiveComplete(obj.id));
     if (allObjectivesComplete && !this.currentLevel.isPassed) {
         this.currentLevel.isPassed = true;
@@ -269,18 +296,18 @@ export class Terminal extends Phaser.Scene {
     this.time.delayedCall(0, () => {
       if (!this.outputText?.scene) return;
       if (scrollToBottom) this.scrollToBottom();
-      else { this.clampScroll(); this.outputText.y = AREA_Y - this.scrollOffset; }
+      else { this.clampScroll(); this.outputText.y = TERMINAL_AREA_Y - this.scrollOffset; }
     });
   }
 
   scrollToBottom() {
     const height = this.outputText.height;
-    this.scrollOffset = (height > AREA_H) ? height - AREA_H : 0;
-    this.outputText.y = AREA_Y - this.scrollOffset;
+    this.scrollOffset = (height > TERMINAL_AREA_HEIGHT) ? height - TERMINAL_AREA_HEIGHT : 0;
+    this.outputText.y = TERMINAL_AREA_Y - this.scrollOffset;
   }
 
   clampScroll() {
-    const maxScroll = Math.max(0, this.outputText.height - AREA_H);
+    const maxScroll = Math.max(0, this.outputText.height - TERMINAL_AREA_HEIGHT);
     this.scrollOffset = Phaser.Math.Clamp(this.scrollOffset, 0, maxScroll);
   }
 
@@ -288,7 +315,7 @@ export class Terminal extends Phaser.Scene {
     if (this.isTimeUp) return;
     this.scrollOffset += (deltaY > 0 ? 20 : -20);
     this.clampScroll();
-    this.outputText.y = AREA_Y - this.scrollOffset;
+    this.outputText.y = TERMINAL_AREA_Y - this.scrollOffset;
   }
 
   formatTime(totalSeconds) {
