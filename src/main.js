@@ -1,4 +1,7 @@
-import { Start } from './scenes/Start.js';
+ import { MainMenu } from './scenes/MainMenu.js'
+ import { Terminal } from './scenes/Terminal.js'
+ import { Levels } from './scenes/Levels.js'
+ import { Chat } from './scenes/Chat.js'
 
 const config = {
     type: Phaser.AUTO,
@@ -9,8 +12,14 @@ const config = {
     height: 720,
     backgroundColor: '#000000',
     pixelArt: false,
+    dom:{
+        createContainer: true
+    },
     scene: [
-        Start
+        MainMenu,
+        Levels,
+        Terminal,
+        Chat,
     ],
     scale: {
         mode: Phaser.Scale.FIT,

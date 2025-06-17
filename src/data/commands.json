@@ -1,0 +1,68 @@
+{
+  "help": {
+    "name": "help",
+    "description": "Menampilkan semua command yang tersedia.",
+    "args": false,
+    "usage": ""
+  },
+  "ls": {
+    "name": "ls",
+    "description": "Menampilkan daftar file dan direktori.",
+    "args": false,
+    "usage": ""
+  },
+  "cat": {
+    "name": "cat",
+    "description": "Menampilkan isi dari sebuah file.",
+    "args": true,
+    "usage": "<nama_file>"
+  },
+  "cd": {
+    "name": "cd",
+    "description": "Berpindah ke direktori lain.",
+    "args": true,
+    "usage": "<nama_direktori>"
+  },
+  "clear": {
+    "name": "clear",
+    "description": "Membersihkan layar terminal.",
+    "args": false,
+    "usage": ""
+  },
+  "submit": {
+    "name": "submit",
+    "description": "Mengirimkan jawaban untuk objektif saat ini.",
+    "args": true,
+    "usage": "<jawaban>"
+  },
+  "clue": {
+    "name": "clue",
+    "description": "Membeli dan menampilkan petunjuk untuk level saat ini.",
+    "args": false,
+    "usage": ""
+  },
+  "exploit": {
+    "name": "exploit",
+    "description": "Mencoba mengeksploitasi kerentanan pada target.",
+    "args": true,
+    "usage": "<target_ip> <port>"
+  },
+  "run": {
+    "name": "run",
+    "description": "Menjalankan sebuah script.",
+    "args": true,
+    "usage": "<nama_script>"
+  },
+  "decrypt": {
+    "name": "decrypt",
+    "description": "Mendekripsi sebuah file dengan kunci yang diberikan.",
+    "args": true,
+    "usage": "<file_terenkripsi> <kunci>"
+  },
+  "compile": {
+    "name": "compile",
+    "description": "Mengkompilasi beberapa file bukti menjadi satu laporan.",
+    "args": true,
+    "usage": "<file1> <file2> ..."
+  }
+}

@@ -1,0 +1,355 @@
+{
+  "1": {
+    "title": "Bab 1: Dipecat",
+    "narrative": "Kamu adalah Rizi. Setelah bertahun-tahun dedikasi, Konoha Corp memecatmu tanpa alasan jelas melalui email dingin. Malamnya, komputermu menyala sendiri, menampilkan pesan dari 'X': \"Mereka membuangmu karena kau hampir tahu kebenarannya. Jika kau ingin keadilan, ikuti instruksiku.\" Baca email dan pesan tersebut.",
+    "commands": ["help", "ls", "cat", "clear", "clue", "submit"],
+    "files": {
+      "email_pemecatan.txt": "Kepada Sdr. Rizi,\n\nDengan berat hati kami sampaikan bahwa layanan Anda di Konoha Corp tidak lagi dibutuhkan efektif per hari ini.\nTerima kasih atas waktunya.\n\nManajemen Konoha Corp.",
+      "pesan_dari_X.txt": "Rizi,\nAku tahu ini mengejutkan. Pemecatanmu bukan kebetulan. Ada sesuatu yang besar yang mereka sembunyikan, dan kau terlalu dekat untuk mengungkapnya.\nIni baru permulaan. Jika kau siap, aku akan membantumu mencari tahu apa yang sebenarnya terjadi.\nKetik 'lanjutkan misi' jika kau mengerti dan siap.\n\n-X"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "lvl1_obj1_baca_email",
+        "type": "read_file_trigger",
+        "targetFile": "email_pemecatan.txt",
+        "description": "Baca email pemecatanmu.",
+        "onSuccess": "Email yang menyakitkan. Tidak ada penghargaan sama sekali."
+      },
+      {
+        "id": "lvl1_obj2_baca_pesanX",
+        "type": "read_file_trigger",
+        "targetFile": "pesan_dari_X.txt",
+        "description": "Baca pesan misterius dari 'X'.",
+        "onSuccess": "Pesan dari 'X' membuka secercah harapan... atau bahaya baru?"
+      },
+      {
+        "id": "lvl1_obj3_konfirmasi",
+        "type": "send_text",
+        "description": "Ketik respons yang diminta 'X' di terminal.",
+        "expectedContent": "lanjutkan misi",
+        "onSuccess": "Baiklah Rizi, keberanianmu patut diacungi jempol. Bersiaplah, perjalanan ini tidak akan mudah.",
+        "onFailure": "'X' menunggu konfirmasimu. Perhatikan pesan dari 'X' baik-baik."
+      }
+    ],
+    "countdown": 300,
+    "rewardCoin": 25,
+    "clues": [
+      { "id": "lvl1_clue1", "text": "Gunakan 'ls' untuk melihat file. Lalu 'cat namafile.txt' untuk membacanya.", "cost": 0 },
+      { "id": "lvl1_clue2", "text": "'X' memintamu mengetikkan frasa tertentu sebagai konfirmasi. Frasa itu ada di dalam 'pesan_dari_X.txt'.", "cost": 5 }
+    ],
+    "isPassed": false,
+    "isLocked": false
+  },
+  "2": {
+    "title": "Bab 2: Investigasi Awal",
+    "narrative": "'X' memberimu akses terbatas ke beberapa direktori internal Konoha Corp. Misimu: cari petunjuk awal tentang apa yang mereka sembunyikan. Ada desas-desus tentang proyek rahasia. Temukan namanya.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
+    "files": {
+      "README.txt": "Akses Terbatas Sistem Konoha Corp.\nDirektori Tersedia: /dokumen_umum, /log_sistem\nGunakan 'cd <direktori>' untuk pindah, 'cd ..' untuk kembali.",
+      "dokumen_umum/kebijakan.txt": "Kebijakan standar perusahaan. Tidak banyak yang berguna di sini.",
+      "dokumen_umum/memo_hr.txt": "Memo HR tentang acara tahunan. Pengalih perhatian.",
+      "log_sistem/akses_290525.log": "2025-05-29 10:00 - User Rizi - Akses ke /proyek/alpha\n2025-05-29 14:30 - User Admin - Akses ke /proyek/K.N.H./data_sensitif\n2025-05-29 17:00 - User Rizi - Sesi berakhir",
+      "log_sistem/catatan_dev_Q1.log": "Catatan Pengembangan Q1:\n- Peningkatan keamanan.\n- Proyek K.N.H. progres signifikan, kerahasiaan data prioritas utama."
+    },
+    "directories": ["dokumen_umum", "log_sistem"],
+    "objectives": [
+      {
+        "id": "lvl2_obj1_proyek",
+        "type": "send_text",
+        "description": "Temukan dan kirimkan nama proyek rahasia (format: Project K.N.H.).",
+        "expectedContent": "Project K.N.H.",
+        "onSuccess": "Tepat sekali! 'Project K.N.H.'... Kedengarannya penting. Kita harus cari tahu lebih lanjut.",
+        "onFailure": "Nama proyeknya belum tepat. Periksa file log atau catatan pengembangan lebih teliti. Ingat formatnya."
+      }
+    ],
+    "countdown": 600,
+    "rewardCoin": 75,
+    "clues": [
+      { "id": "lvl2_clue1", "text": "File log seringkali mencatat aktivitas penting. Cari file dengan ekstensi .log di direktori /log_sistem.", "cost": 10 },
+      { "id": "lvl2_clue2", "text": "Nama proyek yang dicari memiliki tiga huruf kapital yang dipisahkan titik. Perhatikan detail dalam file log.", "cost": 15 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "3": {
+    "title": "Bab 3: Jejak Digital",
+    "narrative": "'X' menginformasikan bahwa data 'Project K.N.H.' sering ditransfer ke server eksternal. Tugasmu adalah menemukan alamat IP server tujuan tersebut dari log transfer data.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
+    "files": {
+      "log_sistem/README_log.txt": "Direktori ini berisi log transfer data dan log aktivitas server lainnya.",
+      "log_sistem/transfer_data_300525.log": "Log Transfer Data (30/05/2025):\n10:05 - Paket KNH_alpha_001 -> 192.168.1.10 (Internal Backup)\n11:30 - Paket KNH_beta_003 -> 203.0.113.45 (Eksternal - Analisis)\n15:00 - Sinkronisasi data umum -> 10.0.0.5 (Server Cabang)",
+      "log_sistem/server_uptime.log": "Log uptime server. Tidak relevan untuk misi ini."
+    },
+    "directories": ["log_sistem"],
+    "objectives": [
+      {
+        "id": "lvl3_obj1_find_ip",
+        "type": "send_text",
+        "description": "Temukan dan kirimkan alamat IP server eksternal tujuan transfer data Project K.N.H.",
+        "expectedContent": "203.0.113.45",
+        "onSuccess": "Kerja bagus! IP 203.0.113.45 adalah server eksternal yang mereka gunakan. Sekarang kita tahu ke mana harus mencari.",
+        "onFailure": "Alamat IP belum benar. Periksa kembali log transfer data, cari entri yang merujuk ke 'Eksternal' atau transfer data K.N.H."
+      }
+    ],
+    "countdown": 450,
+    "rewardCoin": 100,
+    "clues": [
+      { "id": "lvl3_clue1", "text": "Fokus pada file log transfer data. Cari kata kunci seperti 'KNH' dan 'Eksternal'.", "cost": 10 },
+      { "id": "lvl3_clue2", "text": "Alamat IP biasanya terdiri dari empat blok angka yang dipisahkan oleh titik.", "cost": 15 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "4": {
+    "title": "Bab 4: Menyusup Server Eksternal",
+    "narrative": "'X' memberitahumu bahwa server eksternal (203.0.113.45) memiliki kerentanan pada port tertentu. 'X' memberimu tool 'exploit'. Gunakan untuk mendapatkan akses dan temukan file konfigurasi utama server.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "exploit", "submit", "clue"],
+    "files": {},
+    "directories": [],
+    "objectives": [
+      {
+        "id": "lvl4_obj1_akses_config",
+        "type": "command_trigger",
+        "targetCommand": "exploit 203.0.113.45 8080",
+        "description": "Eksploitasi server eksternal untuk mendapatkan akses.",
+        "onSuccess": "Berhasil! Akses ke server 203.0.113.45 terbuka. File konfigurasi dan data sementara kini dapat diakses.",
+        "onFailure": "Gagal. Gunakan format 'exploit <IP> <PORT>' dengan IP dan port yang benar.",
+        "revealsFiles": {
+          "config/server_settings.conf": "Server Name: KNH_External_Analysis\nAdmin: Dr. Aris\nData Path: /mnt/knh_data_secure\nFirewall: active",
+          "temp_data/random_log.txt": "Beberapa data acak, tidak penting."
+        }
+      },
+      {
+        "id": "lvl4_obj2_nama_admin",
+        "type": "send_text",
+        "description": "Siapa nama Admin server eksternal ini? Kirimkan namanya.",
+        "expectedContent": "Dr. Aris",
+        "onSuccess": "Benar, Dr. Aris. Nama ini bisa jadi petunjuk penting selanjutnya.",
+        "onFailure": "Nama Admin salah. Periksa kembali file 'config/server_settings.conf' setelah berhasil exploit."
+      }
+    ],
+    "countdown": 700,
+    "rewardCoin": 125,
+    "clues": [
+      { "id": "lvl4_clue1", "text": "'X' menyebutkan tool 'exploit'. Perintahnya adalah 'exploit <IP_TARGET> <PORT_TARGET>'. IP target adalah 203.0.113.45, portnya 8080.", "cost": 15 },
+      { "id": "lvl4_clue2", "text": "Setelah berhasil 'exploit', gunakan 'ls' untuk melihat isinya, lalu 'cd config' dan 'cat server_settings.conf'.", "cost": 20 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "5": {
+    "title": "Bab 5: Melewati Firewall",
+    "narrative": "Data utama 'Project K.N.H.' ada di '/mnt/knh_data_secure' di server eksternal, namun dilindungi firewall. 'X' memberimu script 'bypass_fw.sh'. Jalankan script ini untuk menonaktifkan firewall sementara dan akses file 'manifest_knh.txt'.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "run", "submit", "clue"],
+    "files": {
+      "bypass_fw.sh": "#!/bin/bash\necho 'Firewall temporarily disabled. Access granted to /mnt/knh_data_secure for 60 seconds.'\n# (Ini hanya simulasi, tidak benar-benar menjalankan script)"
+    },
+    "directories": ["mnt", "mnt/knh_data_secure"],
+    "objectives": [
+      {
+        "id": "lvl5_obj1_run_script",
+        "type": "command_trigger",
+        "targetCommand": "run bypass_fw.sh",
+        "description": "Jalankan script 'bypass_fw.sh'.",
+        "onSuccess": "Script berhasil dijalankan! Firewall dinonaktifkan sementara. Segera akses manifest!",
+        "onFailure": "Gunakan perintah 'run <nama_script>' untuk menjalankan script.",
+        "revealsFiles": {
+            "mnt/knh_data_secure/manifest_knh.txt": "Manifest Proyek K.N.H.:\n- Modul Analisis Perilaku V.2.1\n- Modul Prediksi Pasar Global V.1.5\n- Komponen Inti: Algoritma 'Oracle_Eye'\n- Status: Operasional Penuh"
+        }
+      },
+      {
+        "id": "lvl5_obj2_algoritma_inti",
+        "type": "send_text",
+        "description": "Apa nama komponen inti/algoritma utama dari Project K.N.H. yang tertulis di manifest?",
+        "expectedContent": "Oracle_Eye",
+        "onSuccess": "Oracle_Eye! Nama yang mengerikan sekaligus menarik. Ini pasti inti dari semua manipulasi mereka.",
+        "onFailure": "Nama komponen inti belum tepat. Baca 'manifest_knh.txt' di '/mnt/knh_data_secure/' setelah menjalankan script."
+      }
+    ],
+    "countdown": 500,
+    "rewardCoin": 150,
+    "clues": [
+      { "id": "lvl5_clue1", "text": "Untuk menjalankan script, gunakan perintah 'run nama_script.sh'. Script yang kamu butuhkan adalah 'bypass_fw.sh'.", "cost": 20 },
+      { "id": "lvl5_clue2", "text": "Setelah firewall nonaktif, segera 'cd /mnt/knh_data_secure' dan 'cat manifest_knh.txt'. Cari nama algoritma atau komponen inti.", "cost": 25 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "6": {
+    "title": "Bab 6: Data Terenkripsi",
+    "narrative": "'X' memberitahu kunci dekripsi ada di catatan Dr. Aris. Kamu perlu kembali ke sistem internal Konoha untuk mencari catatannya, lalu kembali ke server eksternal untuk mendekripsi file 'rencana_final_knh.dat'.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "decrypt", "submit", "clue"],
+    "files": {
+      "mnt/knh_data_secure/rencana_final_knh.dat": "ISI FILE TERENKRIPSI",
+      "dokumen_umum/catatan_dr_aris.txt": "Catatan Pribadi Dr. Aris:\nMeeting penting Project K.N.H. hari ini. Presentasi berjalan lancar.\nJangan lupa, ulang tahunku tanggal 15 Agustus 1978. Perlu siapkan perayaan kecil."
+    },
+    "directories": ["dokumen_umum", "mnt", "mnt/knh_data_secure"],
+    "objectives": [
+      {
+        "id": "lvl6_obj1_dekripsi_file",
+        "type": "command_trigger",
+        "targetCommand": "decrypt rencana_final_knh.dat 15081978",
+        "description": "Dekripsi file 'rencana_final_knh.dat' menggunakan kunci dari 'catatan_dr_aris.txt'.",
+        "onSuccess": "Dekripsi berhasil! Isi file 'rencana_final_knh.dat' sekarang terbaca.",
+        "onFailure": "Format perintah 'decrypt <file> <kunci>'. Kunci adalah tanggal lahir Dr. Aris (DDMMYYYY).",
+        "revealsFiles": {
+            "mnt/knh_data_secure/rencana_final_knh.dat.decrypted": "Konoha Corp menggunakan Project K.N.H. untuk memanipulasi sentimen publik dan pasar saham global demi keuntungan eksekutif puncak. Pemecatan Rizi dilakukan karena dia tanpa sadar menemukan anomali transaksi terkait."
+        }
+      },
+      {
+        "id": "lvl6_obj2_alasan_pemecatan",
+        "type": "send_text",
+        "description": "Apa alasan sebenarnya Rizi dipecat? (Kirimkan frasa kunci dari file yang didekripsi)",
+        "expectedContent": "menemukan anomali transaksi",
+        "onSuccess": "Benar! Kamu dipecat karena tanpa sadar menemukan anomali transaksi yang terkait dengan Project K.N.H. Mereka panik!",
+        "onFailure": "Belum tepat. Baca kembali isi file yang didekripsi, cari alasan pemecatan Rizi."
+      }
+    ],
+    "countdown": 800,
+    "rewardCoin": 200,
+    "clues": [
+      { "id": "lvl6_clue1", "text": "Cari file 'catatan_dr_aris.txt' di direktori '/dokumen_umum'. Di dalamnya ada tanggal lahir Dr. Aris.", "cost": 20 },
+      { "id": "lvl6_clue2", "text": "Kunci dekripsi adalah tanggal lahir Dr. Aris dalam format DDMMYYYY. Gunakan perintah 'decrypt rencana_final_knh.dat KUNCI'.", "cost": 25 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "7": {
+    "title": "Bab 7: Saksi Bisu",
+    "narrative": "'X' memberimu akses ke log komunikasi internal para eksekutif. Cari percakapan yang membahas Project K.N.H. dan identifikasi eksekutif yang paling tampak ragu.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
+    "files": {
+      "log_komunikasi/chat_direksi_01.log": "CEO: Progres K.N.H. harus dipercepat. Risiko terlalu besar jika bocor.\nCFO: Anggaran sudah maksimal. Hasil harus sepadan.\nCTO: Secara teknis, Oracle_Eye sudah stabil.",
+      "log_komunikasi/chat_direksi_02.log": "COO: Saya masih khawatir soal aspek etis K.N.H. ini, Pak CEO.\nCEO: Etika bisa dinegosiasikan, Tuan Tanaka. Hasil akhir yang penting.\nCFO: Tuan Tanaka, fokus pada operasional. Jangan cemaskan hal lain.",
+      "log_komunikasi/memo_internal_legal.txt": "Memo Legal: Potensi tuntutan hukum terkait Project K.N.H. sangat tinggi. Perlu mitigasi risiko segera."
+    },
+    "directories": ["log_komunikasi"],
+    "objectives": [
+      {
+        "id": "lvl7_obj1_eksekutif_ragu",
+        "type": "send_text",
+        "description": "Siapa nama eksekutif yang paling ragu tentang aspek etis Project K.N.H.? (Kirimkan nama belakangnya saja)",
+        "expectedContent": "Tanaka",
+        "onSuccess": "Tepat! Tuan Tanaka, sang COO. Dia bisa jadi kunci untuk membongkar semuanya, atau justru target selanjutnya.",
+        "onFailure": "Nama eksekutif belum benar. Periksa log komunikasi para direksi, cari siapa yang menyuarakan kekhawatiran etis."
+      }
+    ],
+    "countdown": 600,
+    "rewardCoin": 250,
+    "clues": [
+      { "id": "lvl7_clue1", "text": "Ada direktori baru '/log_komunikasi'. Jelajahi isinya.", "cost": 25 },
+      { "id": "lvl7_clue2", "text": "Cari percakapan antar eksekutif (CEO, CFO, COO, CTO). Perhatikan siapa yang berbeda pendapat atau menunjukkan keraguan.", "cost": 30 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "8": {
+    "title": "Bab 8: Inti Skandal",
+    "narrative": "Dengan informasi tentang Tuan Tanaka, 'X' berhasil menemukan lokasi file master plan Project K.N.H. File tersebut ada di server pribadi Tanaka. Tugasmu adalah masuk dan mengambil file 'master_plan_KNH.pdf'.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "submit", "clue"],
+    "files": {
+      "README_tanaka_server.txt": "Server pribadi Tuan Tanaka. Akses diberikan oleh X.\nFile penting ada di direktori /rahasia_perusahaan.",
+      "rahasia_perusahaan/master_plan_KNH.pdf": "DOKUMEN MASTER PLAN PROJECT K.N.H. (Sangat Rahasia)\nBab 1: Tujuan Proyek - Dominasi Pasar Global.\nBab 2: Metodologi - Penggunaan Algoritma Oracle_Eye untuk manipulasi sentimen dan prediksi pasar.\nBab 3: Target Keuntungan - Triliunan dalam 5 tahun.\nBab 4: Risiko & Mitigasi - Termasuk eliminasi personil yang berpotensi membocorkan (Rizi, Tanaka jika tidak kooperatif).\nBab 5: Daftar Eksekutif Terlibat - (Berisi nama-nama petinggi Konoha Corp).",
+      "rahasia_perusahaan/catatan_tanaka.txt": "Aku tidak bisa terus begini. K.N.H. sudah terlalu jauh. Aku harus melakukan sesuatu."
+    },
+    "directories": ["rahasia_perusahaan"],
+    "objectives": [
+      {
+        "id": "lvl8_obj1_ambil_masterplan",
+        "type": "read_file_trigger",
+        "targetFile": "rahasia_perusahaan/master_plan_KNH.pdf",
+        "description": "Temukan dan baca file 'master_plan_KNH.pdf'.",
+        "onSuccess": "Master plan di tanganmu! Isinya mengerikan. Konoha Corp benar-benar busuk sampai ke akarnya."
+      },
+      {
+        "id": "lvl8_obj2_konfirmasi_baca",
+        "type": "send_text",
+        "description": "Setelah membaca master plan, apa bab yang membahas tentang eliminasi personil? (Kirimkan nomor bab saja)",
+        "expectedContent": "4",
+        "onSuccess": "Bab 4, benar. Mereka bahkan merencanakan eliminasi. Ini lebih dari sekadar skandal keuangan.",
+        "onFailure": "Nomor bab salah. Periksa kembali isi 'master_plan_KNH.pdf'."
+      }
+    ],
+    "countdown": 900,
+    "rewardCoin": 300,
+    "clues": [
+      { "id": "lvl8_clue1", "text": "Baca README di server Tanaka untuk mengetahui lokasi direktori file penting.", "cost": 30 },
+      { "id": "lvl8_clue2", "text": "File yang kamu cari adalah 'master_plan_KNH.pdf'. Setelah membacanya, perhatikan nomor bab yang relevan dengan pertanyaan.", "cost": 35 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "9": {
+    "title": "Bab 9: Bukti Tak Terbantahkan",
+    "narrative": "Kamu telah mengumpulkan banyak bukti. 'X' memintamu mengkompilasi tiga bukti terkuat ke dalam satu paket laporan.",
+    "commands": ["help", "ls", "cat", "cd", "clear", "compile", "submit", "clue"],
+    "files": {
+      "email_pemecatan.txt": "(Konten dari Bab 1)",
+      "pesan_dari_X.txt": "(Konten dari Bab 1)",
+      "log_sistem/akses_290525.log": "(Konten dari Bab 2)",
+      "mnt/knh_data_secure/rencana_final_knh.dat.decrypted": "ISI FILE rencana_final_knh.dat YANG SUDAH DIDEKRIPSI (dari Bab 6)",
+      "rahasia_perusahaan/master_plan_KNH.pdf": "(Konten dari Bab 8)"
+    },
+    "directories": ["log_sistem", "mnt", "mnt/knh_data_secure", "rahasia_perusahaan"],
+    "objectives": [
+      {
+        "id": "lvl9_obj1_kompilasi_bukti",
+        "type": "command_trigger",
+        "targetCommand": "compile rencana_final_knh.dat.decrypted master_plan_KNH.pdf log_sistem/akses_290525.log",
+        "description": "Kompilasi tiga bukti terkuat: rencana final, master plan, dan log akses Admin. (Gunakan 'compile file1 file2 file3')",
+        "onSuccess": "Bukti berhasil dikompilasi menjadi 'laporan_final.zip'! Ini adalah amunisi utamamu.",
+        "onFailure": "Perintah kompilasi belum benar atau file yang dipilih salah. Pilih tiga file paling krusial.",
+        "revealsFiles": {
+          "laporan_final.zip": "Kompilasi bukti-bukti krusial terkait skandal Konoha Corp dan Project K.N.H."
+        }
+      },
+      {
+        "id": "lvl9_obj2_konfirmasi_zip",
+        "type": "send_text",
+        "description": "Kirimkan nama file hasil kompilasi sebagai konfirmasi.",
+        "expectedContent": "laporan_final.zip",
+        "onSuccess": "Laporan final siap. Sekarang, keputusan besar menantimu di bab terakhir.",
+        "onFailure": "Nama file kompilasi belum benar. Perintah 'compile' akan menghasilkan file .zip."
+      }
+    ],
+    "countdown": 750,
+    "rewardCoin": 350,
+    "clues": [
+      { "id": "lvl9_clue1", "text": "Kamu perlu memilih tiga file paling memberatkan. Rencana final, master plan, dan log akses Admin ke data sensitif KNH adalah pilihan yang kuat.", "cost": 30 },
+      { "id": "lvl9_clue2", "text": "Gunakan perintah 'compile file1 file2 file3'. Urutan file mungkin tidak penting, tapi nama file harus tepat.", "cost": 40 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  },
+  "10": {
+    "title": "Bab 10: Pilihan Akhir",
+    "narrative": "'X' menghubungimu: \"Rizi, kau berhasil. 'laporan_final.zip' berisi semua yang kita butuhkan. Sekarang, pilihan ada di tanganmu. Ungkap semua ini ke publik, hancurkan Konoha Corp dan orang-orang di baliknya. Atau... jual data ini ke pihak ketiga yang siap membayarmu mahal. Pikirkan baik-baik.\"",
+    "commands": ["help", "ls", "cat", "clear", "submit"],
+    "files": {
+      "laporan_final.zip": "(Berisi kompilasi bukti dari Bab 9)",
+      "tawaran_pihak_ketiga.txt": "Rizi,\nKami dengar kau memiliki sesuatu yang sangat berharga. Kami siap membayar 10.000 koin untuk 'laporan_final.zip'. Tidak ada pertanyaan. Transfer instan.\n\n- Kolektor Data Gelap",
+      "catatan_X_terakhir.txt": "Pilihan apapun yang kau ambil, aku menghargainya. Keadilan punya banyak wajah. Semoga berhasil.\n\n-X"
+    },
+    "directories": [],
+    "objectives": [
+      {
+        "id": "lvl10_obj1_pilihan",
+        "type": "send_text_choice",
+        "description": "Apa keputusanmu? Ketik 'UNGKAP SKANDAL' atau 'JUAL DATA'.",
+        "expectedContent": ["UNGKAP SKANDAL", "JUAL DATA"],
+        "onSuccess_UNGKAP_SKANDAL": "Kamu memilih mengungkap kebenaran. Dunia akan tahu kebusukan Konoha Corp. Keadilan mungkin tidak memberimu kekayaan, tapi tidurmu akan nyenyak. (ENDING BAIK)",
+        "onSuccess_JUAL_DATA": "Kamu memilih jalan pintas. 10.000 koin masuk ke akunmu. Konoha Corp mungkin hancur oleh pihak lain, atau data itu digunakan untuk kejahatan lebih besar. Kau kaya, tapi dengan beban. (ENDING BURUK)",
+        "onFailure": "Pilihan tidak valid. Ketik 'UNGKAP SKANDAL' atau 'JUAL DATA'."
+      }
+    ],
+    "countdown": 0,
+    "rewardCoin": 0,
+    "clues": [
+      { "id": "lvl10_clue1", "text": "Baca 'tawaran_pihak_ketiga.txt' dan 'catatan_X_terakhir.txt' untuk membantumu memutuskan.", "cost": 0 },
+      { "id": "lvl10_clue2", "text": "Tidak ada jawaban benar atau salah secara absolut. Ini adalah pilihan moralmu.", "cost": 0 }
+    ],
+    "isPassed": false,
+    "isLocked": true
+  }
+}
