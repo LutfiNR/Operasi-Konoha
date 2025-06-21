@@ -114,7 +114,7 @@ export class Terminal extends Phaser.Scene {
     }
 
     // // --- Pesan Awal & Listeners ---
-    // if (this.currentLevel.narrative) this.printLine('Narrative : \n' + this.currentLevel.narrative);
+    if (this.currentLevel.narrative) this.printLine('Narrative : \n' + this.currentLevel.narrative);
     this.refreshOutput(true);
 
     this.input.keyboard.on("keydown", this.handleKeyInput, this);
