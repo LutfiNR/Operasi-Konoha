@@ -1,5 +1,5 @@
 // src/scenes/Terminal.js
-import { commandHandlers } from '../utils/commandHandlers.js';
+import { commandHandlers } from '../utils/CommandHandlers.js';
 import { TerminalManager } from '../utils/TerminalManager.js';
 import { gameData } from '../utils/GameData.js';
 import { soundManager } from '../utils/SoundManager.js';
