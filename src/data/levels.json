@@ -58,7 +58,7 @@
         "id": "lvl2_obj1_proyek",
         "type": "send_text",
         "description": "Temukan dan kirimkan nama proyek rahasia (format: Project K.N.H.).",
-        "expectedContent": "Project K.N.H.",
+        "expectedContent": "K.N.H.",
         "onSuccess": "Tepat sekali! 'Project K.N.H.'... Kedengarannya penting. Kita harus cari tahu lebih lanjut.",
         "onFailure": "Nama proyeknya belum tepat. Periksa file log atau catatan pengembangan lebih teliti. Ingat formatnya."
       }
