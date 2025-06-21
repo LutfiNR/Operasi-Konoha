@@ -5,7 +5,7 @@
     "commands": ["help", "ls", "cat", "clear", "clue", "submit"],
     "files": {
       "email_pemecatan.txt": "Kepada Sdr. Rizi,\n\nDengan berat hati kami sampaikan bahwa layanan Anda di Konoha Corp tidak lagi dibutuhkan efektif per hari ini.\nTerima kasih atas waktunya.\n\nManajemen Konoha Corp.",
-      "pesan_dari_X.txt": "Rizi,\nAku tahu ini mengejutkan. Pemecatanmu bukan kebetulan. Ada sesuatu yang besar yang mereka sembunyikan, dan kau terlalu dekat untuk mengungkapnya.\nIni baru permulaan. Jika kau siap, aku akan membantumu mencari tahu apa yang sebenarnya terjadi.\nKetik 'lanjutkan misi' jika kau mengerti dan siap.\n\n-X"
+      "pesan_dari_X.txt": "Rizi,\nAku tahu ini mengejutkan. Pemecatanmu bukan kebetulan. Ada sesuatu yang besar yang mereka sembunyikan, dan kau terlalu dekat untuk mengungkapnya.\nIni baru permulaan. Jika kau siap, aku akan membantumu mencari tahu apa yang sebenarnya terjadi.\nKetik dan kirimkan 'lanjutkan misi' jika kau mengerti dan siap.\n\n-X"
     },
     "directories": [],
     "objectives": [
