@@ -96,7 +96,7 @@ export const TerminalManager = {
    */
   loadProgress() {
     try {
-      const savedData = localStorage.getItem('cyberHeistGameProgress');
+      const savedData = sessionStorage.getItem('cyberHeistGameProgress');
       if (savedData) {
         const data = JSON.parse(savedData);
         gameData.completedObjectives = new Set(data.completedObjectives || []);
