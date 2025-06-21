@@ -14,7 +14,7 @@ export const soundManager = {
      * @param {string} key - Kunci aset BGM yang akan diputar.
      * @param {Phaser.Types.Sound.SoundConfig} [config] - Konfigurasi opsional untuk suara.
      */
-    playBGM(scene, key, config = { loop: true, volume: 0.7 }) {
+    playBGM(scene, key, config = { loop: true, volume: 1.5 }) {
         if (!scene?.sound) return;
 
         if (this.currentBGM?.isPlaying && this.currentBGMKey === key) {

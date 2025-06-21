@@ -140,7 +140,7 @@
   },
   "5": {
     "title": "Bab 5: Melewati Firewall",
-    "narrative": "Data utama 'Project K.N.H.' ada di '/mnt/knh_data_secure' di server eksternal, namun dilindungi firewall. 'X' memberimu script 'bypass_fw.sh'. Jalankan script ini untuk menonaktifkan firewall sementara dan akses file 'manifest_knh.txt'.",
+    "narrative": "Data utama 'Project K.N.H.' ada di '/mnt/knh_data_secure' di server eksternal, namun dilindungi firewall. 'X' memberimu script 'bypass_fw.sh'. Jalankan script ini untuk menonaktifkan firewall sementara dan akses file 'manifest_knh.txt' kita cari tahu algoritmanya.",
     "commands": ["help", "ls", "cat", "cd", "clear", "run", "submit", "clue"],
     "files": {
       "bypass_fw.sh": "#!/bin/bash\necho 'Firewall temporarily disabled. Access granted to /mnt/knh_data_secure for 60 seconds.'\n# (Ini hanya simulasi, tidak benar-benar menjalankan script)"

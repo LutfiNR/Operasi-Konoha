@@ -55,7 +55,7 @@
     "onFail": { "timeUp": [ { "from": "X", "text": "Firewall kembali aktif sebelum kamu mendapatkan manifest. Terlalu lambat.", "delay": 1500 } ] }
   },
   "6": {
-    "intro": [ { "from": "X", "text": "File 'rencana_final_knh.dat' terenkripsi. Kuncinya ada di catatan Dr. Aris di '/dokumen_umum/'. Formatnya DDMMYYYY.", "delay": 3000 } ],
+    "intro": [ { "from": "X", "text": "File 'rencana_final_knh.dat' terenkripsi. Kuncinya ada di catatan Dr. Aris di '/dokumen_umum/'. Formatnya DDMMYYYY. Untuk mencari tahu alasan dipecatmu.", "delay": 3000 } ],
     "onObjectiveComplete": { "lvl6_obj2_alasan_pemecatan": [ { "from": "X", "text": "Jadi itu alasanmu dipecat. Mereka takut kau mengungkap transaksi busuk mereka.", "delay": 2500 } ] },
     "onLevelComplete": [ { "from": "X", "text": "Kebenaran di balik pemecatanmu terungkap. Tapi ini baru satu keping puzzle.", "delay": 2000 } ],
     "onFail": { "timeUp": [ { "from": "X", "text": "Gagal mendekripsi file tepat waktu. Kunci mungkin sudah diganti.", "delay": 1500 } ] }
@@ -67,7 +67,7 @@
     "onFail": { "timeUp": [ { "from": "X", "text": "Log komunikasi sudah dihapus. Terlambat.", "delay": 1500 } ] }
   },
   "8": {
-    "intro": [ { "from": "X", "text": "Dengan info Tanaka, aku menemukan server pribadinya. Master plan K.N.H. ada di sana. Ambil!", "delay": 3000 } ],
+    "intro": [ { "from": "X", "text": "Dengan info Tanaka, aku menemukan server pribadinya. Master plan K.N.H. ada di sana. Ambil dan rencana apa yang berhubungan dengan pemecatanmu!", "delay": 3000 } ],
     "onObjectiveComplete": { "lvl8_obj2_konfirmasi_baca": [ { "from": "X", "text": "Bab 4... Mereka bahkan merencanakan 'eliminasi'. Mengerikan.", "delay": 2000 } ] },
     "onLevelComplete": [ { "from": "X", "text": "Inti skandal ada padamu. Konoha Corp tidak akan bisa lari lagi.", "delay": 2000 } ],
     "onFail": { "timeUp": [ { "from": "X", "text": "Server Tanaka terkunci otomatis. Gagal mendapatkan master plan.", "delay": 1500 } ] }
