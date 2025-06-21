@@ -84,7 +84,7 @@ export const TerminalManager = {
         completedLevels: Array.from(gameData.completedLevels),
         coin: gameData.coin
       };
-      localStorage.setItem('cyberHeistGameProgress', JSON.stringify(dataToSave));
+      sessionStorage.setItem('cyberHeistGameProgress', JSON.stringify(dataToSave));
       console.log("Progres disimpan:", dataToSave);
     } catch (e) {
       console.error("Gagal menyimpan progres:", e);

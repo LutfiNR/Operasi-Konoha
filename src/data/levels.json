@@ -324,7 +324,7 @@
   },
   "10": {
     "title": "Bab 10: Pilihan Akhir",
-    "narrative": "'X' menghubungimu: \"Rizi, kau berhasil. 'laporan_final.zip' berisi semua yang kita butuhkan. Sekarang, pilihan ada di tanganmu. Ungkap semua ini ke publik, hancurkan Konoha Corp dan orang-orang di baliknya. Atau... jual data ini ke pihak ketiga yang siap membayarmu mahal. Pikirkan baik-baik.\"",
+    "narrative": "'X' menghubungimu: \"Rizi, kau berhasil. 'laporan_final.zip' berisi semua yang kita butuhkan. Sekarang, pilihan ada di tanganmu. 'UNGKAP' semua ini ke publik, hancurkan Konoha Corp dan orang-orang di baliknya. Atau... 'JUAL' data ini ke pihak ketiga yang siap membayarmu mahal. Pikirkan baik-baik.\"",
     "commands": ["help", "ls", "cat", "clear", "submit"],
     "files": {
       "laporan_final.zip": "(Berisi kompilasi bukti dari Bab 9)",
@@ -337,7 +337,7 @@
         "id": "lvl10_obj1_pilihan",
         "type": "send_text_choice",
         "description": "Apa keputusanmu? Ketik 'UNGKAP SKANDAL' atau 'JUAL DATA'.",
-        "expectedContent": ["UNGKAP SKANDAL", "JUAL DATA"],
+        "expectedContent": ["UNGKAP", "JUAL"],
         "onSuccess_UNGKAP_SKANDAL": "Kamu memilih mengungkap kebenaran. Dunia akan tahu kebusukan Konoha Corp. Keadilan mungkin tidak memberimu kekayaan, tapi tidurmu akan nyenyak. (ENDING BAIK)",
         "onSuccess_JUAL_DATA": "Kamu memilih jalan pintas. 10.000 koin masuk ke akunmu. Konoha Corp mungkin hancur oleh pihak lain, atau data itu digunakan untuk kejahatan lebih besar. Kau kaya, tapi dengan beban. (ENDING BURUK)",
         "onFailure": "Pilihan tidak valid. Ketik 'UNGKAP SKANDAL' atau 'JUAL DATA'."
