@@ -1,9 +1,9 @@
 {
   "1": {
     "intro": [
-      { "from": "X", "text": "Rizi, aku tahu ini berat. Tapi diam tidak akan mengubah apapun.", "delay": 2500 },
-      { "from": "X", "text": "Mereka pikir kau hanya karyawan biasa. Mereka salah besar.", "delay": 2500 },
-      { "from": "X", "text": "Email pemecatan dan pesan dariku ada di terminalmu. Bacalah keduanya dengan teliti.", "delay": 3000 }
+      { "from": "X", "text": "Rizi, aku tahu ini berat. Tapi kamu telah dipecat dari Konoha Corp.", "delay": 2500 },
+      { "from": "X", "text": "Mereka memecatmu karena kamu terlalu jujur, ada hal yang harus dirahasiakan oleh perusahaan.", "delay": 2500 },
+      { "from": "X", "text": "Email pemecatan dan pesan petunjuk dariku sudah kukirimkan di komputermu. Bacalah keduanya dengan teliti.", "delay": 3000 }
     ],
     "onObjectiveComplete": {
       "lvl1_obj1_baca_email": [ { "from": "X", "text": "Dingin dan kejam, bukan? Begitulah cara Konoha Corp.", "delay": 2000 } ],

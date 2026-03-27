@@ -56,7 +56,7 @@ export const commandHandlers = {
         }
       }
     }
-    if (entries.size > 0) terminal.printLine(Array.from(entries).sort().join("  "));
+    if (entries.size > 0) terminal.printLine(Array.from(entries).sort().join('\n'));
     else terminal.printLine("No files or directories found.");
   },
   cat({ terminal, args }) {

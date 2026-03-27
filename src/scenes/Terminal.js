@@ -32,11 +32,11 @@ export class Terminal extends Phaser.Scene {
     super("Terminal");
     // Inisialisasi semua properti state di sini agar jelas
     Object.assign(this, {
-        terminalHistory: [], inputBuffer: "", scrollOffset: 0,
-        currentLevelKey: null, currentLevel: null, levels: null, commandsMeta: null,
-        allowedCommands: [], levelFiles: {}, levelDirectories: [], currentDirectory: "/",
-        countdownEvent: null, remainingTime: 0, timerTextDisplay: null, isTimeUp: false,
-        coinTextDisplay: null, coinChangeHandler: null, keyboardSound: null
+      terminalHistory: [], inputBuffer: "", scrollOffset: 0,
+      currentLevelKey: null, currentLevel: null, levels: null, commandsMeta: null,
+      allowedCommands: [], levelFiles: {}, levelDirectories: [], currentDirectory: "/",
+      countdownEvent: null, remainingTime: 0, timerTextDisplay: null, isTimeUp: false,
+      coinTextDisplay: null, coinChangeHandler: null, keyboardSound: null
     });
   }
 
@@ -50,11 +50,11 @@ export class Terminal extends Phaser.Scene {
 
   init(data) {
     this.currentLevelKey = data.levelKey || '1';
-    
+
     // Reset state untuk setiap level baru untuk menghindari carry-over
     Object.assign(this, {
-        terminalHistory: [], inputBuffer: "", scrollOffset: 0,
-        remainingTime: 0, isTimeUp: false, currentDirectory: "/"
+      terminalHistory: [], inputBuffer: "", scrollOffset: 0,
+      remainingTime: 0, isTimeUp: false, currentDirectory: "/"
     });
 
     // Hentikan dan hancurkan objek dari instance scene sebelumnya
@@ -62,13 +62,13 @@ export class Terminal extends Phaser.Scene {
     this.timerTextDisplay?.destroy();
     this.coinTextDisplay?.destroy();
     if (this.coinChangeHandler) {
-        gameData.emitter.off('coinChanged', this.coinChangeHandler);
+      gameData.emitter.off('coinChanged', this.coinChangeHandler);
     }
   }
 
   create() {
     const { width, height } = this.cameras.main;
-    
+
     // --- Latar Belakang & Suara ---
     this.add.image(0, 0, 'background-room').setOrigin(0).setDisplaySize(width, height);
     soundManager.playBGM(this, 'bgmTerminal', { loop: true, volume: 0.2 });
@@ -81,11 +81,11 @@ export class Terminal extends Phaser.Scene {
     this.commandsMeta = this.cache.json.get("commands");
     const staticLevelData = this.levels?.[this.currentLevelKey];
     if (!staticLevelData) {
-        console.error(`Terminal.js: Data untuk level key "${this.currentLevelKey}" tidak ditemukan.`);
-        this.scene.start('Levels'); // Kembali jika level tidak ada
-        return;
+      console.error(`Terminal.js: Data untuk level key "${this.currentLevelKey}" tidak ditemukan.`);
+      this.scene.start('Levels'); // Kembali jika level tidak ada
+      return;
     }
-    
+
     // Gunakan deep copy agar modifikasi runtime tidak mengubah cache
     this.currentLevel = JSON.parse(JSON.stringify(staticLevelData));
     // this.curretLevelChat = JSON.parse(this)
@@ -101,20 +101,20 @@ export class Terminal extends Phaser.Scene {
     this.currentLevel.isPassed = gameData.isLevelComplete(this.currentLevelKey) || (objectivesPresent && this.currentLevel.objectives.every(obj => obj.isComplete));
 
     if (this.currentLevel.clues) {
-        this.currentLevel.clues.forEach(clue => { clue.isRevealed = false; });
+      this.currentLevel.clues.forEach(clue => { clue.isRevealed = false; });
     }
 
     // --- Setup UI ---
     this.setupTerminalUI(); // Menggunakan kode UI yang Anda berikan
     this.setupTopUI();
-    
+
     // Luncurkan Chat Scene sebagai overlay
     if (this.scene.manager.keys.Chat) {
-        this.scene.launch('Chat', { levelKey: this.currentLevelKey });
+      this.scene.launch('Chat', { levelKey: this.currentLevelKey });
     }
 
-    // // --- Pesan Awal & Listeners ---
-    if (this.currentLevel.narrative) this.printLine('Narrative : \n' + this.currentLevel.narrative);
+    // --- Pesan Awal & Listeners ---
+    //if (this.currentLevel.narrative) this.printLine('Narrative : \n' + this.currentLevel.narrative);
     this.refreshOutput(true);
 
     this.input.keyboard.on("keydown", this.handleKeyInput, this);
@@ -147,10 +147,10 @@ export class Terminal extends Phaser.Scene {
     const maskShape = this.make.graphics();
     maskShape.fillStyle(0xffffff); // Warna tidak penting untuk mask geometri
     maskShape.fillRect(
-        this.terminalOutputContainer.x + TERMINAL_AREA_X, 
-        this.terminalOutputContainer.y + TERMINAL_AREA_Y, 
-        TERMINAL_AREA_WIDTH, 
-        TERMINAL_AREA_HEIGHT
+      this.terminalOutputContainer.x + TERMINAL_AREA_X,
+      this.terminalOutputContainer.y + TERMINAL_AREA_Y,
+      TERMINAL_AREA_WIDTH,
+      TERMINAL_AREA_HEIGHT
     );
     this.outputText.setMask(maskShape.createGeometryMask());
   }
@@ -162,8 +162,8 @@ export class Terminal extends Phaser.Scene {
     this.coinTextDisplay = this.add.text(20, UI_Y_OFFSET, `Coins: ${gameData.coin}`,
       { ...style, fontSize: COIN_FONT_SIZE, color: COIN_FILL_COLOR }
     ).setOrigin(0, 0.5);
-    
-    this.timerTextDisplay = this.add.text(width / 2, UI_Y_OFFSET, "", 
+
+    this.timerTextDisplay = this.add.text(width / 2, UI_Y_OFFSET, "",
       { ...style, fontSize: TIMER_FONT_SIZE, color: TIMER_FILL_COLOR, align: 'center' }
     ).setOrigin(0.5, 0.5);
 
@@ -182,7 +182,7 @@ export class Terminal extends Phaser.Scene {
       delay: 1000, callback: this.updateCountdown, callbackScope: this, loop: true
     });
   }
-  
+
   updateCountdown() {
     if (this.isTimeUp || this.currentLevel.isPassed) {
       this.countdownEvent?.remove(); this.countdownEvent = null;
@@ -229,37 +229,38 @@ export class Terminal extends Phaser.Scene {
 
   executeCommand(input) {
     if (this.isTimeUp && input.toLowerCase() !== "shutdown") {
-        this.printLine("Time is up. Only 'shutdown' is allowed."); return;
+      this.printLine("Time is up. Only 'shutdown' is allowed."); return;
     }
     this.printLine(`${this.getPrompt()}${input}`);
     const args = input.split(" ");
     const baseCommand = args[0].toLowerCase();
     const handler = commandHandlers[baseCommand];
     if (this.allowedCommands.includes(baseCommand) && handler) {
-      try { 
-        handler({ terminal: this, args, commandsMeta: this.commandsMeta , allowedCommands: this.allowedCommands}); }
+      try {
+        handler({ terminal: this, args, commandsMeta: this.commandsMeta, allowedCommands: this.allowedCommands });
+      }
       catch (e) { console.error(`Error executing ${baseCommand}:`, e); this.printLine(`An error occurred.`); }
-    } else { this.printLine(`bash: ${baseCommand}: command not found`); }
+    } else { this.printLine(`bash: ${baseCommand}: command not found try 'help' for a list of available commands.`); }
   }
 
   checkObjectiveTrigger({ type, target, targetPrefix, directSuccess = false, objective = null, successMessage = null }) {
     if (directSuccess && objective) { this.completeObjective(objective, successMessage); return; }
     for (const obj of (this.currentLevel.objectives || [])) {
-        if (obj.type === type && obj.id && !gameData.isObjectiveComplete(obj.id)) {
-            let match = false;
-            if (type === 'read_file_trigger' && obj.targetFile === target) match = true;
-            if (type === 'command_trigger') {
-                const commandString = (obj.targetCommand || obj.targetCommandPrefix || "");
-                if (obj.targetCommand === target || (obj.targetCommandPrefix && target.startsWith(obj.targetCommandPrefix))) {
-                    match = true;
-                    if (obj.revealsFiles) {
-                        Object.assign(this.levelFiles, obj.revealsFiles);
-                        this.printLine("New file data accessible.");
-                    }
-                }
+      if (obj.type === type && obj.id && !gameData.isObjectiveComplete(obj.id)) {
+        let match = false;
+        if (type === 'read_file_trigger' && obj.targetFile === target) match = true;
+        if (type === 'command_trigger') {
+          const commandString = (obj.targetCommand || obj.targetCommandPrefix || "");
+          if (obj.targetCommand === target || (obj.targetCommandPrefix && target.startsWith(obj.targetCommandPrefix))) {
+            match = true;
+            if (obj.revealsFiles) {
+              Object.assign(this.levelFiles, obj.revealsFiles);
+              this.printLine("New file data accessible.");
             }
-            if (match) { this.completeObjective(obj); break; }
+          }
         }
+        if (match) { this.completeObjective(obj); break; }
+      }
     }
   }
 
@@ -271,10 +272,10 @@ export class Terminal extends Phaser.Scene {
     soundManager.playSFX(this, 'notification');
     const allObjectivesComplete = (this.currentLevel.objectives || []).every(obj => gameData.isObjectiveComplete(obj.id));
     if (allObjectivesComplete && !this.currentLevel.isPassed) {
-        this.currentLevel.isPassed = true;
-        gameData.markLevelAsComplete(this.currentLevelKey);
-        this.printLine("Congratulations! Level passed!");
-        this.handleLevelCompletion({ level: this.currentLevel, success: true });
+      this.currentLevel.isPassed = true;
+      gameData.markLevelAsComplete(this.currentLevelKey);
+      this.printLine("Congratulations! Level passed!");
+      this.handleLevelCompletion({ level: this.currentLevel, success: true });
     }
   }
 
@@ -282,7 +283,7 @@ export class Terminal extends Phaser.Scene {
     const path = this.currentDirectory === "/" ? "/" : this.currentDirectory.slice(0, -1);
     return `${PROMPT_BASE}:${path}$ `;
   }
-  
+
   printLine(text) {
     String(text).split('\n').forEach(line => {
       this.terminalHistory.push(line);
@@ -291,7 +292,11 @@ export class Terminal extends Phaser.Scene {
   }
 
   refreshOutput(scrollToBottom = false) {
-    const fullText = `${this.terminalHistory.join("\n")}\n\n${this.getPrompt()}${this.inputBuffer}`;
+    const historyText = this.terminalHistory.join("\n");
+
+    const fullText = historyText.length > 0
+      ? `${historyText}\n${this.getPrompt()}${this.inputBuffer}`
+      : `${this.getPrompt()}${this.inputBuffer}`;
     this.outputText.setText(fullText);
     this.time.delayedCall(0, () => {
       if (!this.outputText?.scene) return;
